@@ -78,8 +78,8 @@ local wire35 = "/home/gabeg/.config/awesome/icons/wireless/wire35-70.png"
 local wire70 = "/home/gabeg/.config/awesome/icons/wireless/wire70-100.png"
 
 -- scripts to get computer info
-net_cmd = "/mnt/Linux/Share/scripts/comp_info.sh net"
-ssid_cmd = "/mnt/Linux/Share/scripts/comp_info.sh net ssid"
+net_cmd = "/mnt/Linux/Share/scripts/compInfo.sh net"
+ssid_cmd = "/mnt/Linux/Share/scripts/compInfo.sh net ssid"
 
 
 

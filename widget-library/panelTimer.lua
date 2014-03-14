@@ -70,9 +70,9 @@ local panelVolume = require("panelVolume")
 -- *************
 
 -- script that prints out current computer info
-bat_cmd = "/mnt/Linux/Share/scripts/comp_info.sh bat"
-net_cmd = "/mnt/Linux/Share/scripts/comp_info.sh net"
-vol_cmd = "/mnt/Linux/Share/scripts/comp_info.sh vol stat"
+bat_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bat"
+net_cmd = "/mnt/Linux/Share/scripts/compInfo.sh net"
+vol_cmd = "/mnt/Linux/Share/scripts/compInfo.sh vol stat"
 
 
 

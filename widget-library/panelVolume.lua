@@ -75,8 +75,8 @@ local vol35 = "/home/gabeg/.config/awesome/icons/vol/vol35-70.png"
 local vol70 = "/home/gabeg/.config/awesome/icons/vol/vol70-100.png"
 
 -- script that prints out current volume value
-vol_cmd = "/mnt/Linux/Share/scripts/comp_info.sh vol stat"
-chVol_cmd = "/mnt/Linux/Share/scripts/comp_info.sh vol "
+vol_cmd = "/mnt/Linux/Share/scripts/compInfo.sh vol stat"
+chVol_cmd = "/mnt/Linux/Share/scripts/compInfo.sh vol "
 
 
 

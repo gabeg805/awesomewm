@@ -70,9 +70,9 @@ local panelText = require("panelText")
 local brightIcon = "/home/gabeg/.config/awesome/icons/brightness.png"
 
 -- script that prints out current volume value
-bright_cmd = "/mnt/Linux/Share/scripts/comp_info.sh bright stat"
-bright_bare_cmd = "/mnt/Linux/Share/scripts/comp_info.sh bright stat-bare"
-chBright_cmd = "/mnt/Linux/Share/scripts/comp_info.sh bright  "
+bright_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bright stat"
+bright_bare_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bright stat-bare"
+chBright_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bright  "
 
 
 

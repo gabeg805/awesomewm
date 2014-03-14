@@ -85,11 +85,13 @@ local bat100Icon = "/home/gabeg/.config/awesome/icons/bat/bat100.png"
 
 
 -- scripts that print out various computer information
-stat_cmd = "/mnt/Linux/Share/scripts/comp_info.sh bat stat"
-bat_cmd = "/mnt/Linux/Share/scripts/comp_info.sh bat"
-cpu_cmd = "/mnt/Linux/Share/scripts/comp_info.sh cpu"
-mem_cmd = "/mnt/Linux/Share/scripts/comp_info.sh mem"
-uptime_cmd = "/mnt/Linux/Share/scripts/comp_info.sh up"
+stat_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bat stat"
+bat_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bat"
+cpu_cmd = "/mnt/Linux/Share/scripts/compInfo.sh cpu"
+mem_cmd = "/mnt/Linux/Share/scripts/compInfo.sh mem"
+temp_cmd = "/mnt/Linux/Share/scripts/compInfo.sh temp"
+uptime_cmd = "/mnt/Linux/Share/scripts/compInfo.sh up"
+
 
 -- system actions
 local shuttingDown = "sudo shutdown -P now"
@@ -208,6 +210,7 @@ panelBattery = make_module('panelBattery',
                                        
                                        -- script output to display in battery menu
                                        upData = panelText.subGetScript(uptime_cmd)
+                                       tempData = panelText.subGetScript(temp_cmd)
                                        cpuData = panelText.subGetScript(cpu_cmd)
                                        memData = panelText.subGetScript(mem_cmd)
                                        
@@ -217,15 +220,16 @@ panelBattery = make_module('panelBattery',
                                        batMenu = naughty.notify( { text = string.format('<span font_desc="%s">%s</span>', 
                                                                                         "Inconsolata 10", 
                                                                                         "~~~~~~~System Information~~~~~~" .. 
-                                                                                            newline .. 
-                                                                                            cpuData .. 
+                                                                                            newline ..
+                                                                                            upData  .. tempData ..
+                                                                                            "\n"  .. 
                                                                                             memData .. 
                                                                                             "\n" ..
-                                                                                            upData .. 
-                                                                                            newline ),
+                                                                                            cpuData  
+                                                                                       ),
                                                                    timeout = 0, hover_timeout = 1,
                                                                    width = 227,
-                                                                   height = 150,
+                                                                   height = 180,
                                                                  } )
                                        return 
                                    end
