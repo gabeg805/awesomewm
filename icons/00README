@@ -1,0 +1,34 @@
+***** "awesome" README File *****
+
+This directory contains all the panel icons for Awesome WM. 
+
+
+
+# ***********
+# Directories
+# ***********
+
+bat        - icons for the battery widget
+powerarrow - arrow icons to separate each widget
+taglist    - indicator icons for which workspace has active windows 
+vol        - icons for the volume widget
+wireless   - icons for the wifi widget
+
+
+
+# *******
+# Scripts
+# *******
+
+N/A
+
+
+
+# *****
+# Files
+# *****
+
+arch-icon.png  - icon for the Awesome menu launcher
+brightness.png - icon for the brightness widget
+clock.png      - icons for the text clock widget
+

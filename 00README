@@ -1,0 +1,35 @@
+***** "awesome" README File *****
+
+This directory contains all the necessary Awesome window manager (WM) configuration files, including panel icons and widgets. 
+
+
+
+# ***********
+# Directories
+# ***********
+
+icons          - contains custom panel icons
+vicious        - Awesome module
+widget-library - contains custom modules
+
+
+
+# *******
+# Scripts
+# *******
+
+N/A
+
+
+
+# *****
+# Files
+# *****
+
+aweBindings.lua  - key bindings for Awesome
+aweInterface.lua - compiles all the panel icons and widgets to set up the Awesome interface
+error_check.lua  - checks for errors when compiling Awesome
+gabegWidgets.lua - custom panel widgets
+rc.lua           - main configuration file for Awesome
+
+
