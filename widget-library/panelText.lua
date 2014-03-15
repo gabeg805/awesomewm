@@ -24,9 +24,12 @@
 -- 
 -- Functions:
 -- 	
---     panelText.getScript    - returns a TEXTBOX (a widget) with a specified color 
---                              and script output
---     panelText.subGetScript - returns specified script output as a string
+--     panelText.getPipeScript    - sets output from piped command as string for 
+--                                  a widget
+--     panelText.subGetPipeScript - returns output from piped command as a string
+--     panelText.getScript        - returns a TEXTBOX (a widget) with a specified 
+--                                  color and script output
+--     panelText.subGetScript     - returns specified script output as a string
 -- 
 -- 
 -- Dependencies:
@@ -68,7 +71,44 @@ end
 
 panelText = make_module('panelText',
                         function(panelText)
-
+                            
+                            -- enables the ability to pipe commands
+                            panelText.pipe = function(cmd, raw)
+                                local f = assert(io.popen(cmd, 'r'))
+                                local s = assert(f:read('*a'))
+                                f:close()
+                                
+                                if raw then return s end
+                                
+                                s = string.gsub(s, '^%s+', '')
+                                s = string.gsub(s, '%s+$', '')
+                                s = string.gsub(s, '[\n\r]+', ' ')
+                                
+                                return s
+                            end
+                            
+                                                        
+                            
+                            -- sets the text, from a piped command, onto the panel
+                            panelText.getPipeScript = function(panel, stuff, color)
+                                panel:set_markup('<span font="Inconsolata 10" color="#EEEEEE">' ..
+                                                 stuff ..
+                                                 '</span>')
+                            end
+                            
+                            
+                            
+                            -- returns the output from a piped command as a string
+                            panelText.subGetPipeScript = function(command)
+                                local output = ""
+                                local cmdPipe = (command):gsub('$output', output)
+                                output = panelText.pipe(cmdPipe)
+                                
+                                return output
+                            end
+                            
+                                                        
+                            
                             -- get output from custom script (returns a panel)
                             panelText.getScript = function(panel, command, color)
                                 local comOutput =  io.popen(command)

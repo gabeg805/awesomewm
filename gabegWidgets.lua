@@ -48,6 +48,7 @@
 --     panelVolume     - custom module, returns volume widget (image and text)
 --     panelTimer      - custom module, refreshes widgets with updated values
 --     panelBrightness - custom module, returns brightness widget (image and text)
+--     panelMusic      - custom module, returns music widget (image and text)
 --
 --   
 --  File Structure:
@@ -92,6 +93,7 @@ local panelWireless = require("panelWireless")
 local panelVolume = require("panelVolume")
 local panelTimer = require("panelTimer")
 local panelBrightness = require("panelBrightness")
+local panelMusic = require("panelMusic")
 
 
 
@@ -120,8 +122,10 @@ gabegWidgets = make_module('gabegWidgets',
                                gabegWidgets.wireless = panelWireless.wireless
                                gabegWidgets.volume = panelVolume.volume
                                gabegWidgets.brightness = panelBrightness.brightness
+                               gabegWidgets.music = panelMusic.music
                                
-                               gabegWidgets.setTimer = panelTimer.timer                               
+                               gabegWidgets.setTimer = panelTimer.timer
+                               gabegWidgets.setMusicTimer = panelTimer.musicTimer
                            end
                            
                           )

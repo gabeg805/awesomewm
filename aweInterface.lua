@@ -99,6 +99,11 @@ gabegWidgets.setTimer( myBatteryImage, myBatteryTextBox,
                      )
 
 
+-- define and set the music widget (and timer)
+myMusicImage, myMusicTextBox = gabegWidgets.music()
+gabegWidgets.setMusicTimer(myMusicImage, myMusicTextBox, 2)
+
+
 
 
 -- ******************
@@ -176,6 +181,9 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    
+    right_layout:add(myMusicImage)
+    right_layout:add(myMusicTextBox)
     
     right_layout:add(arrEnd)
     right_layout:add(myBrightnessImage)

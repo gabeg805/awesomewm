@@ -24,7 +24,9 @@
 -- 
 -- Functions:
 -- 	
---     panelTimer.timer - refreshes widgets with updated values on a timer
+--     panelTimer.timer      - refreshes widgets with updated values, on a timer
+--     panelTimer.musicTimer - refreshes only the music player widget with updated
+--                             values, on a timer
 -- 
 -- 
 -- Dependencies:
@@ -36,6 +38,7 @@
 --     panelBattery  - custom module, returns battery widget (image and text)
 --     panelWireless - custom module, returns wifi widget (image and text)
 --     panelVolume   - custom module, returns volume widget (image and text)
+--     panelMusic    - custom module, returns music widget (image and text)
 --   
 --   
 --  File Structure:
@@ -62,6 +65,7 @@ local panelText = require("panelText")
 local panelBattery = require("panelBattery")
 local panelWireless = require("panelWireless")
 local panelVolume = require("panelVolume")
+local panelMusic = require("panelMusic")
 
 
 
@@ -114,12 +118,27 @@ panelTimer = make_module('panelTimer',
                                                             panelText.getScript(myVolumeTextBox, vol_cmd, "#660099")
                                                             
                                                             
-                                                            panelText.getScript(myBrightnessTextBox, bright_cmd, "#ff3300")
+                                                            panelText.getScript(myBrightnessTextBox, bright_cmd, "#FF3300")
                                                             
                                                         end
                                                        )
                                  mytimer:start()
                              end                             
                              
+                             
+                             -- refreshes only the music player widget with updated values
+                             panelTimer.musicTimer = function(myMusicImage, myMusicTextBox, seconds)
+                                 myMusicTimer = timer({ timeout = seconds })
+                                 myMusicTimer:connect_signal("timeout",
+                                                             function()
+                                                                 song = panelMusic.song()
+                                                                 
+                                                                 panelText.getPipeScript(myMusicTextBox, song, "#FF6600")
+                                                                 panelMusic.getIcon(myMusicImage, song)
+                                                                 
+                                                             end
+                                                            )
+                                 myMusicTimer:start()
+                             end
                          end
                         )

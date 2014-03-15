@@ -1,5 +1,5 @@
 -- 
--- Created By: Gabriel Gonzalez
+-- Created By: Gabriel Gonzalez  
 -- 
 -- 
 -- Name:
@@ -217,16 +217,20 @@ panelBattery = make_module('panelBattery',
                                        newline = "\n" .. "\n"
                                        
                                        
-                                       batMenu = naughty.notify( { text = string.format('<span font_desc="%s">%s</span>', 
-                                                                                        "Inconsolata 10", 
-                                                                                        "~~~~~~~System Information~~~~~~" .. 
-                                                                                            newline ..
-                                                                                            upData  .. tempData ..
-                                                                                            "\n"  .. 
-                                                                                            memData .. 
-                                                                                            "\n" ..
-                                                                                            cpuData  
-                                                                                       ),
+                                       batMenu = naughty.notify( { text = 
+                                                                   string.format('<span font_desc="%s">%s</span>', 
+                                                                                 "Inconsolata 10", 
+                                                                                 "      System Information      ") ..
+                                                                                               newline ..
+                                                                                               
+                                                                                               string.format('<span font_desc="%s">%s</span>', 
+                                                                                                             "Inconsolata 10", 
+                                                                                                             upData  .. tempData ..
+                                                                                                                 "\n"  .. 
+                                                                                                                 memData .. 
+                                                                                                                 "\n" ..
+                                                                                                                 cpuData  
+                                                                                                            ),
                                                                    timeout = 0, hover_timeout = 1,
                                                                    width = 227,
                                                                    height = 180,

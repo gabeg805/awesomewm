@@ -76,7 +76,6 @@ chBright_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bright  "
 
 
 
-
 -- *****************
 -- DEFINE THE MODULE
 -- *****************

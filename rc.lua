@@ -67,8 +67,7 @@ awful = require("awful")
 awful.rules = require("awful.rules")
 require("awful.autofocus")
 
--- Widget and layout library
--- vicious = require("vicious")
+-- Widget library
 wibox = require("wibox")
 
 -- Theme handling library
