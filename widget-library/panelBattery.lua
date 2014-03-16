@@ -218,8 +218,10 @@ panelBattery = make_module('panelBattery',
                                        
                                        
                                        batMenu = naughty.notify( { text = 
-                                                                   string.format('<span font_desc="%s">%s</span>', 
-                                                                                 "Inconsolata 10", 
+                                                                   string.format('<span style="oblique" ' ..
+                                                                                 'underline="low" ' ..
+                                                                                 'weight="bold" ' ..
+                                                                                 'font_desc="Inconsolata 9">%s</span>',
                                                                                  "      System Information      ") ..
                                                                                                newline ..
                                                                                                

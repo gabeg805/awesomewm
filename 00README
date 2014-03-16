@@ -1,6 +1,6 @@
 ***** "awesome" README File *****
 
-This directory contains all the necessary Awesome window manager (WM) configuration files, including panel icons and widgets. 
+This directory contains all the necessary Awesome window manager (WM) configuration files, including panel icons and widgets. Tried and tested with Arch Linux, Kernel Version 3.13.5-1. If any problems arise make sure to check that you have all modules installed on your machine (necessary modules can be found in "rc.lua"). These files should be placed under the "~/.config/awesome" directory.
 
 
 
@@ -31,5 +31,4 @@ aweInterface.lua - compiles all the panel icons and widgets to set up the Awesom
 error_check.lua  - checks for errors when compiling Awesome
 gabegWidgets.lua - custom panel widgets
 rc.lua           - main configuration file for Awesome
-
 

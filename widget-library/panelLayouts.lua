@@ -99,9 +99,10 @@ panelLayouts = make_module('panelLayouts',
                                        awful.layout.suit.tile.top,
                                        
                                        awful.layout.suit.fair,
-                                       awful.layout.suit.fair.horizontal,
                                        
                                        awful.layout.suit.max,
+                                       awful.layout.suit.floating,
+                                       awful.layout.suit.magnifier
                                    }
                                    
                                    

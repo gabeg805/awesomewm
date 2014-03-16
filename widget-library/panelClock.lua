@@ -127,7 +127,7 @@ panelClock = make_module('panelClock',
                                      local cal = awful.util.pread("cal -s " .. datespec)
                                      cal = string.gsub(cal, "^%s*(.-)%s*$", "%1")
                                      calendar = naughty.notify( { text = string.format('<span font_desc="%s">%s</span>', 
-                                                                                       "Inconsolata 10", "   " .. cal),
+                                                                                       "Inconsolata 10", cal),
                                                                   timeout = 0, hover_timeout = 1,
                                                                   width = 160,
                                                                   height = 150,
