@@ -1,0 +1,120 @@
+#!/bin/bash
+# 
+# Created By: Gabriel Gonzalez
+# 
+# 
+# Name:
+#   
+#     bright
+# 
+# 
+# Syntax:
+#   
+#     bright [VALUE (100-4882)] [off] [status]
+# 
+# 
+# Purpose:
+#   
+#     Changes the brightness of the monitor, or turns it off entirely.
+# 
+# 
+# Keywords:
+#   
+#     VALUE  - set screen brightness with a value from 0-16
+#     off    - turns off the monitor
+#     status - prints the current brightness value
+# 
+# 
+# Functions:
+#   
+#     N/A
+# 
+# 
+# Dependencies:
+#   
+#     syntax - custom script, prints syntax in header above when user syntax
+#              error is found
+#   
+#   
+# Modification History:
+#   
+#     gabeg Mar 02 2014 <> created
+#
+# ************************************************************************
+
+
+# **********************************
+# File Location and Brightness Value
+# **********************************
+
+USER_MAIN='/mnt/Linux/Share'
+USER_HOME='/home/gabeg'
+USER_USER='gabeg'
+
+input="$1"      # screen brightness value
+file='/sys/class/backlight/intel_backlight/brightness'  # loc "brightness" file
+
+
+
+# ***************************************
+# Different Possible Values of User Input
+# ***************************************
+
+if [[ "$input" == '' ]]; then 
+    
+    # Default Brightness Value
+
+    pow='/sys/class/power_supply/BAT0'
+    batcheck=`head -1 "$pow/present"`
+    charge=`head -1 "$pow/status"`
+    
+    if [ $batcheck -eq 1 -a "$charge" == "Charging" -o "$charge" == "Full" ]; then 
+        input=3000
+    else input=1000; fi
+
+elif [[ "$input" == 'off' ]]; then
+
+    # Turns Off Monitor
+
+    echo "Turning off monitor..."
+    xset dpms force off
+    exit
+    
+elif [[ "$input" == 'status' ]]; then
+
+    # Prints Current Screen Brightness
+
+    current=`cat $file`
+    echo "Current screen brightness is:" $current
+    exit
+
+# elif [[ "$input" == 'up' ]]; then
+#     current=`cat $file`
+#     value=$[ $current + 5 ]
+    
+#     echo "$value" > "$file"
+
+    
+# elif [[ "$input" == 'down' ]]; then
+
+elif [ "$input" -eq "$input" ] 2>/dev/null; then
+    if [ "$input" -ge 100 -a "$input" -lt 4882 ]; then
+        
+        # check owner of "brightness" file
+        fown=`ls -ghX $file | grep -oc "root"`
+        
+        # change ownership of 'brightness' file from root to gabeg
+        if [ $fown -eq 1 ]; then sudo chown $USER_USER:$USER_USER $file; fi
+    fi
+else
+    # Prints Syntax Error
+    synloc=`echo $0`
+    $USER_MAIN/scripts/funcs/syntax "$synloc"
+    exit
+fi
+
+
+echo "Changing screen brightness to: $input"
+echo "$input" > "$file"
+
+exit 0
