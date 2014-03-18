@@ -8,7 +8,11 @@ directory. The one directory that contains information that is not needed under 
     "/usr/share/awesome/themes/THEME_NAME/"
 and the taglist icons should be placed in that same directory. In the "theme.lua" file and in other .lua config files, I specify "Inconsolata" as the font. This font can either be changed in ALL files or can simply be downloaded with 
     "sudo pacman -S ttf-inconsolata"
-and from then on it will be recognized.
+and from then on it will be recognized. In order to enable screenshot capabilities, the package "scrot" must be installed with
+    "sudo pacman -S scrot"
+My username, "gabeg" comes up a lot in these config files but you can easily just change that to yours with 
+    "sed -i -e 's/\/home\/gabeg/\/home\/USER/' *lua"
+and do that in each directory with a config file. After that, that's it! Now you're set to run Awesome WM on Arch Linux!
 
 
 

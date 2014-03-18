@@ -101,13 +101,13 @@ panelLayouts = make_module('panelLayouts',
                                        awful.layout.suit.fair,
                                        
                                        awful.layout.suit.max,
-                                       awful.layout.suit.floating,
-                                       awful.layout.suit.magnifier
+                                       awful.layout.suit.magnifier,
+                                       awful.layout.suit.floating
                                    }
                                    
                                    
                                    -- add screen tags to workspaces
-                                   tags = { names = { "1", "2", "3", "4" } }
+                                   tags = { names = { "1", "2", "3", "4", "5" } }
                                    
                                    
                                    -- Each screen has its own tag table.

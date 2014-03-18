@@ -133,8 +133,10 @@ globalkeys = awful.util.table.join(
     
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn("mocp -f") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("mocp -G") end),
-    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mocp -r") end)
+    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mocp -r") end),
     
+    awful.key({ }, "Print", function () awful.util.spawn("scrot /home/gabeg/screenshot.png") end)
+        
                                   )
 
 
