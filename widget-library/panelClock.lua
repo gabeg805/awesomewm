@@ -90,7 +90,7 @@ panelClock = make_module('panelClock',
                                  
                                  mytextclock = awful.widget.textclock(
                                      '<span background="#777E76" font="Iconsolata 10" color="#EEEEEE"> ' ..
-                                         '%a %B %d  %I:%M %p ' ..
+                                         '%a %b %d  %I:%M %p ' ..
                                          '</span>'
                                                                      )
                                  
