@@ -25,12 +25,12 @@
 -- Functions:
 -- 	
 --     panelWireless.getIcon  - returns the correct wifi icon given the current
---                                     wifi percentage value
---     panelWireless.click    - makes wireless widget clickable, displays
+--                              wifi percentage value
+--     disp_wireMenu          - displays the hover-enabled popup
+--     add_wireMenu           - enables the popup
+--     panelWireless.hover    - makes wireless widget hoverable, displays
 --                              computer information on popup
---     remove_wireMenu        - removes the click-enabled popup
---     add_wireMenu           - displays the click-enabled popup
---     panelWireless.wireless - returns the wireless widget (image and text)
+--     panelWireless.wireless - returns the wireless widget
 -- 
 -- 
 -- Dependencies:
@@ -39,8 +39,10 @@
 --     naughty - Awesome builtin module
 --     wibox   - Awesome builtin module
 -- 
---     panelText - custom module, returns script output in string format or 
---                 as text for a widget
+--     panelText        - custom module, returns script output in string format or 
+--                        as text for a widget
+--     compInfo-Arch.sh - custom script, displays a wide variety of computer
+--                        information
 --   
 --   
 --  File Structure:
@@ -54,6 +56,10 @@
 -- Modification History:
 -- 	
 --     gabeg Mar 13 2014 <> created
+--     gabeg Mar 22 2014 <> removed widget text that would appear on the 
+--                          panel and made it instead display in a popup.
+--                          also made the popup appear when mouse hovers
+--                          over the widget instead of by clicking
 --
 -- ************************************************************************
 
@@ -73,13 +79,14 @@ local panelText = require("panelText")
 
 -- wireless icons for different percentage values
 local wireNone = "/home/gabeg/.config/awesome/icons/wireless/wireNone.png"
-local wire0 = "/home/gabeg/.config/awesome/icons/wireless/wire0-35.png"
-local wire35 = "/home/gabeg/.config/awesome/icons/wireless/wire35-70.png"
-local wire70 = "/home/gabeg/.config/awesome/icons/wireless/wire70-100.png"
+local wire0 = "/home/gabeg/.config/awesome/icons/wireless/wire0-25.png"
+local wire25 = "/home/gabeg/.config/awesome/icons/wireless/wire25-50.png"
+local wire50 = "/home/gabeg/.config/awesome/icons/wireless/wire50-75.png"
+local wire75 = "/home/gabeg/.config/awesome/icons/wireless/wire75-100.png"
 
 -- scripts to get computer info
-net_cmd = "/mnt/Linux/Share/scripts/compInfo.sh net"
-ssid_cmd = "/mnt/Linux/Share/scripts/compInfo.sh net ssid"
+net_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net"
+ssid_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net ssid"
 
 
 
@@ -107,10 +114,9 @@ panelWireless = make_module('panelWireless',
                                 -- sets the icon for the wifi widget
                                 panelWireless.getIcon = function(panel, command)
                                     local percent = panelText.subGetScript(net_cmd)
-                                    local subPercent = string.sub(percent, 0, 3)
-                                    
+                                    local subPercent = percent:gsub('%%', '') 
                                     local subStatus = string.sub(percent, 0, 1)
-                                                                       
+                                    local icon = ""
                                     
                                     if subStatus == "S" then 
                                         icon = wireNone
@@ -118,12 +124,14 @@ panelWireless = make_module('panelWireless',
                                         
                                         subPercent = subPercent + 0
                                         
-                                        if subPercent > 0 and subPercent < 35 then
+                                        if subPercent > 0 and subPercent < 25 then
                                             icon = wire0
-                                        elseif subPercent >= 35 and subPercent < 70 then
-                                            icon = wire35
-                                        elseif subPercent >= 70 then
-                                            icon = wire70
+                                        elseif subPercent >= 25 and subPercent < 50 then
+                                            icon = wire25
+                                        elseif subPercent >= 50 and subPercent < 75 then
+                                            icon = wire50
+                                        elseif subPercent >= 75 then
+                                            icon = wire75
                                         end
                                     end
                                     
@@ -131,55 +139,40 @@ panelWireless = make_module('panelWireless',
                                 end
                                 
                                 
-                                -- makes wifi widget clickable (displays popup)
-                                panelWireless.click = function(myWireless)
-                                    local wireMenu = nil
+                                -- makes wifi widget hoverable (displays popup)
+                                panelWireless.hover = function(myWirelessImage)
+                                    naughty.destroy(wireMenu)
+                                                                            
+                                    -- computer info to display on popup
+                                    ssidData = panelText.subGetScript(ssid_cmd)
+                                    netData  = panelText.subGetScript(net_cmd)
                                     
-                                    -- remove the wifi popup
-                                    function remove_wireMenu()
-                                        if wireMenu ~= nil then
-                                            naughty.destroy(wireMenu)
-                                            wireMenu = nil
-                                        end
-                                    end
-                                    
-                                    
-                                    -- display the wifi popup
-                                    function add_wireMenu()
-                                        remove_wireMenu()
-                                        
-                                        -- computer info to display on popup
-                                        ssidData = panelText.subGetScript(ssid_cmd)
-                                        
-                                        wireMenu = naughty.notify( { text = string.format('<span font_desc="%s">%s</span>', 
-                                                                                          "Inconsolata 10", 
-                                                                                          ssidData ),
-                                                                     timeout = 0, hover_timeout = 1,
-                                                                     width = 150,
-                                                                     height = 30,
-                                                                   } )
-                                        return 
-                                    end
+                                    wireMenu = naughty.notify( { text = ssidData .. "Strength: " .. netData,
+                                                                 font = "Inconsolata 10", 
+                                                                 timeout = 0, hover_timeout = 0,
+                                                                 width = 150,
+                                                                 height = 60,
+                                                               } )
                                     
                                     
                                     -- enable mouse events for textclock widget
-                                    myWireless:buttons( awful.util.table.join( 
-                                                            awful.button({ }, 1, function () add_wireMenu() end)
-                                                                             )
-                                                      )
+                                    myWirelessImage:buttons( awful.util.table.join( 
+                                                                 awful.button({ }, 4, function () panelWireless.hover(myWirelessImage) end),
+                                                                 awful.button({ }, 5, function () panelWireless.hover(myWirelessImage) end) ) 
+                                                           )
                                 end
                                 
                                 
                                 -- returns the wifi widget (image and text)
                                 panelWireless.wireless = function()
                                     myWirelessImage = wibox.widget.imagebox()
-                                    myWirelessTextBox = wibox.widget.textbox()
                                     
                                     panelWireless.getIcon(myWirelessImage, net_cmd)
-                                    panelText.getScript(myWirelessTextBox, net_cmd, "#006699")
-                                    panelWireless.click(myWirelessTextBox)
                                     
-                                    return myWirelessImage, myWirelessTextBox
+                                    myWirelessImage:connect_signal("mouse::enter", function() panelWireless.hover(myWirelessImage) end)
+                                    myWirelessImage:connect_signal("mouse::leave", function() naughty.destroy(wireMenu) end)                                    
+                                    
+                                    return myWirelessImage
                                 end
                                 
                             end

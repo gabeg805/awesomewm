@@ -35,6 +35,7 @@
 --    
 --  File Structure:
 --
+--     * Import Modules
 --     * Mouse Bindings
 --     * Key Bindings
 --     * Client Keys
@@ -48,6 +49,14 @@
 --     gabeg Mar 08 2014 <> created
 --
 -- ************************************************************************
+
+
+
+-- **************
+-- IMPORT MODULES
+-- **************
+
+local bindFuncs = require("bindFuncs")
 
 
 
@@ -72,10 +81,21 @@ root.buttons(awful.util.table.join(
 -- define mod key
 modkey = "Mod4"
 
+-- make the taskbar initially invisible (there's a macro to make it visible below)
+myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
+
 
 -- Key bindings
 globalkeys = awful.util.table.join(
-
+    
+    -- Restore Minimized Client
+    awful.key({ modkey, "Control" }, "m", awful.client.restore),
+    
+    -- Toggle Panel Visibility
+    awful.key({ modkey }, "t", function ()
+                  myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
+                               end),    
+    
     -- Change Viewport 
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
@@ -122,20 +142,26 @@ globalkeys = awful.util.table.join(
     
     
     -- brightness keys
-    -- awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("") end),
-    -- awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("") end),
+    awful.key({ }, "XF86MonBrightnessUp", function() bindFuncs.signalBright("up") end),
+    awful.key({ }, "XF86MonBrightnessDown", function () bindFuncs.signalBright("down") end),
 
 
     -- Sound Keys
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -c 0 set Master toggle") end),
-    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -c 0 set Master 1+ unmute") end),
-    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -c 0 set Master 1-") end),
+    awful.key({ }, "XF86AudioMute", function() bindFuncs.signalVolume("mute") end),
+    awful.key({ }, "XF86AudioRaiseVolume", function() bindFuncs.signalVolume("up") end),
+    awful.key({ }, "XF86AudioLowerVolume", function() bindFuncs.signalVolume("down") end),
+                  
     
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn("mocp -f") end),
     awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("mocp -G") end),
     awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mocp -r") end),
     
-    awful.key({ }, "Print", function () awful.util.spawn("scrot /home/gabeg/screenshot.png") end)
+    awful.key({ }, "Print", 
+              function () 
+                  awful.util.spawn("scrot /home/gabeg/screenshot.png") 
+                  naughty.notify( { text = "Screen Captured!", timeout = 1 } )
+              end
+             )
         
                                   )
 
@@ -148,7 +174,15 @@ globalkeys = awful.util.table.join(
 -- Make window Fullscreen AND Kill Focused Process
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end)
+    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
+    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
+    awful.key({ modkey,           }, "m",      function (c) c.minimized = true               end),
+    awful.key({ modkey,           }, "u",
+        function (c)
+            c.maximized_horizontal = not c.maximized_horizontal
+            c.maximized_vertical   = not c.maximized_vertical
+        end)
+
                                   )
 
 
@@ -190,7 +224,8 @@ end
 -- moves window (client) to desired location
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
-    awful.button({ modkey }, 1, awful.mouse.client.move)
+    awful.button({ modkey }, 1, awful.mouse.client.move),
+    awful.button({ modkey }, 3, awful.mouse.client.resize)
                                      )
 
 
@@ -213,6 +248,7 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    { rule = { }, properties = { }, callback = awful.client.setslave },
     -- Set Firefox to always map on tag number 1 of screen 3.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },

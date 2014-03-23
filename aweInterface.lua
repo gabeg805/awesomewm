@@ -86,22 +86,15 @@ myTextClockImage, myTextClock = gabegWidgets.clock()
 
 -- define battery, wifi, and volume widgets
 myBatteryImage, myBatteryTextBox = gabegWidgets.battery()
-myWirelessImage, myWirelessTextBox = gabegWidgets.wireless()
-myVolumeImage, myVolumeTextBox = gabegWidgets.volume()
-myBrightnessImage, myBrightnessTextBox = gabegWidgets.brightness()
+myWirelessImage = gabegWidgets.wireless()
+myVolumeImage = gabegWidgets.volume()
+myBrightnessImage = gabegWidgets.brightness()
 
 -- enable the widget timer
-gabegWidgets.setTimer( myBatteryImage, myBatteryTextBox, 
-                       myWirelessImage, myWirelessTextBox, 
-                       myVolumeImage, myVolumeTextBox, 
-                       myBrightnessTextBox, 
-                       60
-                     )
+gabegWidgets.setTimer( myBatteryImage, myBatteryTextBox, myWirelessImage, 60)
 
-
--- define and set the music widget (and timer)
--- myMusicImage, myMusicTextBox = gabegWidgets.music()
--- gabegWidgets.setMusicTimer(myMusicImage, myMusicTextBox, 2)
+-- set the music player popup
+gabegWidgets.music(1)
 
 
 
@@ -128,6 +121,7 @@ arrEnd:set_image("/home/gabeg/.config/awesome/icons/powerarrow/arrEnd.png")
 -- INITIALIZE PANEL ITEMS
 -- **********************
 
+myTaskBar = {}
 mywibox = {}
 mypromptbox = {}
 mylayoutbox = {}
@@ -137,9 +131,35 @@ mytaglist.buttons = awful.util.table.join(
     awful.button({ }, 1, awful.tag.viewonly),
     awful.button({ modkey }, 1, awful.client.movetotag),
     awful.button({ }, 3, awful.tag.viewtoggle),
-    awful.button({ modkey }, 3, awful.client.toggletag),
-    awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end))
+    awful.button({ modkey }, 3, awful.client.toggletag)
+                                         )
 
+mytasklist = {}
+mytasklist.buttons = awful.util.table.join(
+    awful.button({ }, 1, function (c)
+                     if c == client.focus then
+                         c.minimized = true
+                     else
+                         -- Without this, the following
+                         -- :isvisible() makes no sense
+                         c.minimized = false
+                         if not c:isvisible() then
+                             awful.tag.viewonly(c:tags()[1])
+                         end
+                         -- This will also un-minimize
+                         -- the client, if needed
+                         client.focus = c
+                         c:raise()
+                     end
+                         end),
+    awful.button({ }, 3, function ()
+                     if instance then
+                         instance:hide()
+                         instance = nil
+                     else
+                         instance = awful.menu.clients({ width=250 })
+                     end
+                         end))
 
 
 -- ******************
@@ -164,11 +184,14 @@ for s = 1, screen.count() do
     
     -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-    
+
+    -- Create a tasklist widget
+    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
     
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
-
+    mywibox[s] = awful.wibox({ position = "top", screen = s })    
+    myTaskBar[s] = awful.wibox({ position = "bottom", screen = s })
+    
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -181,25 +204,19 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    
-    -- right_layout:add(myMusicImage)
-    -- right_layout:add(myMusicTextBox)
+
+    -- right_music:add(myMusicImage)
+    -- right_music:add(myMusicTextBox)
     
     right_layout:add(arrEnd)
     right_layout:add(myBrightnessImage)
-    right_layout:add(myBrightnessTextBox)
     right_layout:add(arr3)
-    right_layout:add(myVolumeImage)
-    right_layout:add(myVolumeTextBox)
-    
+    right_layout:add(myVolumeImage)    
     right_layout:add(arr2)
     right_layout:add(myWirelessImage)
-    right_layout:add(myWirelessTextBox)
-    
     right_layout:add(arr1)
     right_layout:add(myBatteryImage)
-    right_layout:add(myBatteryTextBox)    
-
+    right_layout:add(myBatteryTextBox) 
     right_layout:add(arr0)
     right_layout:add(myTextClockImage)
     right_layout:add(myTextClock)
@@ -211,7 +228,9 @@ for s = 1, screen.count() do
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
     layout:set_right(right_layout)
+    
     mywibox[s]:set_widget(layout)
+    myTaskBar[s]:set_widget(mytasklist[s])
 end
 
 

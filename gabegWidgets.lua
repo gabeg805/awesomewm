@@ -24,11 +24,7 @@
 -- 
 -- Functions:
 -- 	
---     gabegWidgets.aweMenu    - create Awesome menu
---     gabegWidgets.clock      - create Awesome text clock
---     gabegWidgets.panLayouts - define panel layouts
---     gabegWidgets.getScript  - get outpu from custom scripts
---     gabegWidgets.setTime    - set the widget refresh timer
+--     gabegWidgets.setTimer - set the widget refresh timer
 -- 
 -- 
 -- Dependencies:
@@ -54,18 +50,15 @@
 --  File Structure:
 --
 --     * Edit Package Path
+--     * Define Necessary Variables
 --     * Import Modules
 --     * Compile All The Modules
---     * Awesome Menu
---     * Text Clock With Calendar
---     * Panel Layouts
---     * Set Panel Text
---     * Set Panel Timer
 -- 
 -- 
 -- Modification History:
 -- 	
 --     gabeg Mar 08 2014 <> created
+--     gabeg Mar 23 2014 <> changed the method of enabling the widget timer
 --
 -- ************************************************************************
 
@@ -80,6 +73,16 @@ package.path = package.path .. ';/home/gabeg/.config/awesome/widget-library/?.lu
 
 
 
+-- **************************
+-- DEFINE NECESSARY VARIABLES
+-- **************************
+
+-- script that prints out current computer info
+bat_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh bat"
+net_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net"
+
+
+
 -- **************
 -- IMPORT MODULES
 -- **************
@@ -91,7 +94,6 @@ local panelText = require("panelText")
 local panelBattery = require("panelBattery")
 local panelWireless = require("panelWireless")
 local panelVolume = require("panelVolume")
-local panelTimer = require("panelTimer")
 local panelBrightness = require("panelBrightness")
 local panelMusic = require("panelMusic")
 
@@ -124,8 +126,23 @@ gabegWidgets = make_module('gabegWidgets',
                                gabegWidgets.brightness = panelBrightness.brightness
                                gabegWidgets.music = panelMusic.music
                                
-                               gabegWidgets.setTimer = panelTimer.timer
-                               gabegWidgets.setMusicTimer = panelTimer.musicTimer
+                               
+                               -- enabling the timer to refresh widgets
+                               gabegWidgets.setTimer = function(myBatteryImage, myBatteryTextBox, myWirelessImage, secs)
+                                   mytimer = timer({ timeout = secs })
+                                   mytimer:connect_signal("timeout", 
+                                                          function()
+                                                              panelBattery.warning()
+                                                              
+                                                              panelBattery.getIcon(myBatteryImage, bat_cmd)
+                                                              panelText.getScript(myBatteryTextBox, bat_cmd, "#333333")
+                                                              
+                                                              panelWireless.getIcon(myWirelessImage, net_cmd)
+                                                          end
+                                                         )
+                                   mytimer:start()
+                               end                             
+                               
                            end
                            
                           )

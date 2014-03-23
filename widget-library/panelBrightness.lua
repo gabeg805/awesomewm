@@ -24,9 +24,8 @@
 -- 
 -- Functions:
 -- 	
---     panelBrightness.click      - makes brightness widget clickable
---     remove_calendar            - removes the click-enabled popup
---     add_calendar               - displays the click-enabled popup
+--     panelBrightness.hover      - makes brightness widget hoverable
+--     add_calendar               - displays the hover-enabled popup
 --     panelBrightness.brightness - returns the brightness widget (image and text)
 -- 
 -- 
@@ -34,8 +33,10 @@
 --
 --     wibox - Awesome builtin module
 -- 
---     panelText - custom module that converts the output from a script into
---                 a string or text for a panel widget 
+--     panelText        - custom module that converts the output from a script into
+--                        a string or text for a panel widget 
+--     compInfo-Arch.sh - custom script, displays a wide variety of computer
+--                        information
 --   
 --   
 --  File Structure:
@@ -49,6 +50,10 @@
 -- Modification History:
 -- 	
 --     gabeg Mar 13 2014 <> created
+--     gabeg Mar 22 2014 <> removed widget text that would appear on the 
+--                          panel and made it instead display in a popup.
+--                          also made the popup appear when mouse hovers
+--                          over the widget instead of by clicking
 --
 -- ************************************************************************
 
@@ -67,12 +72,17 @@ local panelText = require("panelText")
 -- **************************
 
 -- icons to display
-local brightIcon = "/home/gabeg/.config/awesome/icons/brightness.png"
+-- local brightIcon = "/home/gabeg/.config/awesome/icons/brightness.png"
+local bright0 = "/home/gabeg/.config/awesome/icons/bright/bright0-20.png"
+local bright20 = "/home/gabeg/.config/awesome/icons/bright/bright20-40.png"
+local bright40 = "/home/gabeg/.config/awesome/icons/bright/bright40-50.png"
+local bright50 = "/home/gabeg/.config/awesome/icons/bright/bright50-60.png"
+local bright60 = "/home/gabeg/.config/awesome/icons/bright/bright60-80.png"
+local bright80 = "/home/gabeg/.config/awesome/icons/bright/bright80-100.png"
 
 -- script that prints out current volume value
-bright_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bright stat"
-bright_bare_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bright stat-bare"
-chBright_cmd = "/mnt/Linux/Share/scripts/compInfo.sh bright  "
+bright_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh bright stat"
+chBright_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh bright  "
 
 
 
@@ -97,55 +107,74 @@ end
 panelBrightness = make_module('panelBrightness',
                               function(panelBrightness)
                                   
-                                  -- make brightness widget clickable (display popup)
-                                  panelBrightness.click = function(myBrightness) 
-                                      local brightMenu = nil
-                                      local temp = panelText.subGetScript(bright_bare_cmd)
+                                  -- sets the icon for the wifi widget
+                                  panelBrightness.getIcon = function(panel, command)
+                                      local percent = panelText.subGetScript(command)
+                                      local subPercent = percent:gsub('%W','')
                                       
-                                      local offset = temp + 0
+                                      subPercent = subPercent + 0
                                       
-                                      -- remove the brightMenu popup
-                                      function remove_brightMenu()
-                                          if brightMenu ~= nil then
-                                              naughty.destroy(brightMenu)
-                                              brightMenu = nil
-                                              
-                                              temp = panelText.subGetScript(bright_bare_cmd)
-                                              offset = temp + 0
-                                          end
+                                      if subPercent > 0 and subPercent < 20 then
+                                          icon = bright0
+                                      elseif subPercent >= 20 and subPercent < 40 then
+                                          icon = bright20
+                                      elseif subPercent >= 40 and subPercent < 50 then
+                                          icon = bright40
+                                      elseif subPercent >= 50 and subPercent < 60 then
+                                          icon = bright50
+                                      elseif subPercent >= 60 and subPercent < 80 then
+                                          icon = bright60
+                                      elseif subPercent >= 80 and subPercent <= 100 then
+                                          icon = bright80
                                       end
+                                      
+                                      panel:set_image(icon)
+                                  end
+                                  
+                                  
+                                  
+                                  function disp_brightMenu(val)
+                                      naughty.destroy(brightMenu)
+                                      
+                                      brightData = panelText.subGetScript(bright_cmd)
+                                      
+                                      brightMenu = naughty.notify( { text = string.format('<span font_desc="%s">%s</span>', 
+                                                                                          "Inconsolata 10",  
+                                                                                          "Brightness: " .. brightData
+                                                                                         ),
+                                                                     timeout = 0, hover_timeout = 0,
+                                                                     width = 130,
+                                                                     height = 30,
+                                                                   } )
+                                  end
+                                  
+                                  
+                                  -- make brightness widget hoverable (display popup)
+                                  panelBrightness.hover = function(myBrightnessImage) 
+                                      local brightMenu = nil
+                                      local temp = panelText.subGetScript(bright_cmd)
+                                      local offset = temp:gsub('%%','') + 0
                                       
                                       
                                       -- display the brightMenu popup
                                       function add_brightMenu(incr)
                                           local saveOffset = offset
-                                          
-                                          remove_brightMenu()
-                                          
                                           offset = saveOffset + incr
                                           
                                           os.execute(chBright_cmd .. offset)
-                                          brightData = panelText.subGetScript(bright_cmd)
                                           
-                                          brightMenu = naughty.notify( { text = string.format('<span font_desc="%s">%s</span>', 
-                                                                                              "Inconsolata 10",  
-                                                                                              "Brightness: " .. brightData
-                                                                                             ),
-                                                                         timeout = 0, hover_timeout = 1,
-                                                                         width = 130,
-                                                                         height = 30,
-                                                                       } )
+                                          disp_brightMenu(offset)
                                       end
                                       
                                       
                                       
                                       -- enable mouse events for textclock widget
-                                      myBrightness:buttons( awful.util.table.join( 
-                                                                awful.button({ }, 1, function () add_brightMenu(0) end),
-                                                                awful.button({ }, 4, function() add_brightMenu(10) end),
-                                                                awful.button({ }, 5, function() add_brightMenu(-10)  end)
-                                                                                 )
-                                                          )
+                                      myBrightnessImage:buttons( awful.util.table.join( 
+                                                                     awful.button({ }, 4, function() add_brightMenu(10) end),
+                                                                     awful.button({ }, 5, function() add_brightMenu(-10)  end)
+                                                                                      )
+                                                               )
+
                                   end
                                   
                                   
@@ -153,14 +182,14 @@ panelBrightness = make_module('panelBrightness',
                                   -- returns the brightness widget (image and text)
                                   panelBrightness.brightness = function()
                                       myBrightnessImage = wibox.widget.imagebox()
-                                      myBrightnessTextBox = wibox.widget.textbox()
                                       
-                                      myBrightnessImage:set_image(brightIcon)
-
-                                      panelText.getScript(myBrightnessTextBox, bright_cmd, "#ff3300")
-                                      panelBrightness.click(myBrightnessTextBox)
+                                      panelBrightness.getIcon(myBrightnessImage, bright_cmd)
                                       
-                                      return myBrightnessImage, myBrightnessTextBox
+                                      myBrightnessImage:connect_signal("mouse::enter", function() panelBrightness.hover(myBrightnessImage); disp_brightMenu(0)  end)
+                                      myBrightnessImage:connect_signal("mouse::leave", function() naughty.destroy(brightMenu) end)
+                                      --panelBrightness.hover(myBrightnessImage)
+                                      
+                                      return myBrightnessImage
                                   end
                                   
                               end

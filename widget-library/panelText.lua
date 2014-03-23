@@ -24,6 +24,7 @@
 -- 
 -- Functions:
 -- 	
+--     panelText.pipe             - enables command piping
 --     panelText.getPipeScript    - sets output from piped command as string for 
 --                                  a widget
 --     panelText.subGetPipeScript - returns output from piped command as a string

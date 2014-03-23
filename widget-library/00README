@@ -31,7 +31,6 @@ panelLayouts.lua    - Awesome layout
 panelMenu.lua       - Awesome menu launcher for the Awesome panel
 panelMusic.lua      - simple music widget, only shows up when music player is running
 panelText.lua       - converts script output to string or to text for a widget
-panelTimer.lua      - refreshes Awesome panel widgets with updated values
 panelVolume.lua     - volume widget for the Awesome panel
 panelWireless.lua   - wifi widget for the Awesome panel
 
