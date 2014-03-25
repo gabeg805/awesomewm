@@ -108,11 +108,18 @@ globalkeys = awful.util.table.join(
                   if client.focus then client.focus:raise() end
               end
              ),
+    awful.key({ modkey,           }, "k",
+              function ()
+                  awful.client.focus.byidx(-1)
+                  if client.focus then client.focus:raise() end
+              end
+             ),
+
     
     
     -- Layout manipulation
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey, "Control" }, "j", function () awful.client.swap.byidx( 1) end),
+    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(-1) end),
     awful.key({ modkey,           }, "Tab",
               function ()
                   awful.client.focus.history.previous()
@@ -130,7 +137,7 @@ globalkeys = awful.util.table.join(
     
     -- Change length of window
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, "k",     function () awful.tag.incmwfact(-0.05)    end),
+    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incmwfact(-0.05)    end),
     
     -- change layout algorithm
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
