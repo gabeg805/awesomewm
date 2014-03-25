@@ -66,7 +66,7 @@ local bindFuncs = require("bindFuncs")
 
 -- Mouse bindings
 root.buttons(awful.util.table.join(
-                 awful.button({ }, 3, function () mymainmenu:toggle() end),
+                 awful.button({ }, 3, function () myMainMenu:toggle() end),
                  awful.button({ }, 4, awful.tag.viewnext),
                  awful.button({ }, 5, awful.tag.viewprev)
                                   )
@@ -158,7 +158,7 @@ globalkeys = awful.util.table.join(
     
     awful.key({ }, "Print", 
               function () 
-                  awful.util.spawn("scrot /home/gabeg/screenshot.png") 
+                  awful.util.spawn("scrot /home/gabeg/screenshot.png && sleep 0.1") 
                   naughty.notify( { text = "Screen Captured!", timeout = 1 } )
               end
              )

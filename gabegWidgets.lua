@@ -80,6 +80,7 @@ package.path = package.path .. ';/home/gabeg/.config/awesome/widget-library/?.lu
 -- script that prints out current computer info
 bat_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh bat"
 net_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net"
+vol_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol stat"
 
 
 
@@ -128,7 +129,7 @@ gabegWidgets = make_module('gabegWidgets',
                                
                                
                                -- enabling the timer to refresh widgets
-                               gabegWidgets.setTimer = function(myBatteryImage, myBatteryTextBox, myWirelessImage, secs)
+                               gabegWidgets.setTimer = function(myBatteryImage, myBatteryTextBox, myWirelessImage, myVolumeImage, secs)
                                    mytimer = timer({ timeout = secs })
                                    mytimer:connect_signal("timeout", 
                                                           function()
@@ -138,6 +139,8 @@ gabegWidgets = make_module('gabegWidgets',
                                                               panelText.getScript(myBatteryTextBox, bat_cmd, "#333333")
                                                               
                                                               panelWireless.getIcon(myWirelessImage, net_cmd)
+                                                              
+                                                              panelVolume.getIcon(myVolumeImage, vol_cmd)
                                                           end
                                                          )
                                    mytimer:start()

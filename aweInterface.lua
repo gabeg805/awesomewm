@@ -91,10 +91,12 @@ myVolumeImage = gabegWidgets.volume()
 myBrightnessImage = gabegWidgets.brightness()
 
 -- enable the widget timer
-gabegWidgets.setTimer( myBatteryImage, myBatteryTextBox, myWirelessImage, 60)
+gabegWidgets.setTimer( myBatteryImage, myBatteryTextBox, myWirelessImage, myVolumeImage, 60)
 
--- set the music player popup
-gabegWidgets.music(1)
+
+-- -- set the music player popup
+-- -- * SEE "panelMusic.lua" for why the code below is commented/uncommented
+-- gabegWidgets.music(5)
 
 
 
@@ -196,7 +198,8 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mypromptbox[s])
-    left_layout:add(mylayoutbox[s])    
+    left_layout:add(myLauncher)
+    -- left_layout:add(mylayoutbox[s])    
     left_layout:add(mytaglist[s])
 
     
@@ -221,8 +224,8 @@ for s = 1, screen.count() do
     right_layout:add(myTextClockImage)
     right_layout:add(myTextClock)
 
-    right_layout:add(myLauncher)
-    
+    -- right_layout:add(myLauncher)
+    right_layout:add(mylayoutbox[s])        
     
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()

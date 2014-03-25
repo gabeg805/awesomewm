@@ -151,7 +151,7 @@ panelWireless = make_module('panelWireless',
                                                                  font = "Inconsolata 10", 
                                                                  timeout = 0, hover_timeout = 0,
                                                                  width = 150,
-                                                                 height = 60,
+                                                                 height = 45,
                                                                } )
                                     
                                     

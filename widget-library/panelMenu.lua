@@ -61,12 +61,14 @@ editor_cmd = terminal .. " -e " .. editor
 
 -- commands to add in Awesome menu
 local browser = "firefox"
+local text = "emacs"
 local rebooting = "sudo reboot"
 local shuttingDown = "sudo shutdown -P now"
 
 -- icons to display
 local archyIcon = "/home/gabeg/.config/awesome/icons/arch-icon.png"
-
+local fireIcon = "/usr/lib/firefox/browser/icons/mozicon128.png"
+local emacsIcon = "/usr/share/emacs/24.3/etc/images/icons/hicolor/32x32/apps/emacs.png"
 
 
 
@@ -93,22 +95,24 @@ panelMenu = make_module('panelMenu',
                             
                             -- Create a laucher widget and a main menu (creates awesome A for panel)
                             panelMenu.aweMenu = function()
-                                myawesomemenu = {
+                                myAwesomeMenu = {
                                     { "edit config", editor_cmd .. " " .. awesome.conffile },
                                     { "restart", awesome.restart },
                                     { "quit", awesome.quit }
                                 }
                                 
                                 
-                                mymainmenu = awful.menu( { items = { 
-                                                               { "awesome", myawesomemenu, archyIcon },
-                                                               { "Reboot", rebooting }, 
-                                                               { "Shut Down", shuttingDown }
+                                myMainMenu = awful.menu( { items = { 
+                                                               { " Awesome", myAwesomeMenu, beautiful.awesome_icon },
+                                                               { " Firefox", browser, fireIcon },
+                                                               { " Emacs", text, emacsIcon },
+                                                               { " Reboot", rebooting }, 
+                                                               { " Shut Down", shuttingDown }
                                                                    }
                                                          } )
                                 
-                                mylauncher = awful.widget.launcher( { image = beautiful.awesome_icon, menu = mymainmenu } )
-                                
+                                mylauncher = awful.widget.launcher( { image = archyIcon, menu = myMainMenu } )
+                                mylauncher:connect_signal("mouse::leave", function() myMainMenu:toggle() end)
                                 return mylauncher
                             end
                             

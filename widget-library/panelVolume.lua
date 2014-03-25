@@ -24,6 +24,8 @@
 -- 
 -- Functions:
 -- 	
+--     muteStat            - checks if mute is toggled
+--     musicStat           - checks if MOCP (the music player) is running
 --     panelVolume.getIcon - returns the correct volume icon given the current
 --                           volume percentage value
 --     disp_volMenu        - enables the popup
@@ -36,6 +38,7 @@
 --
 --     wibox - Awesome builtin module
 -- 
+--     panelMusic       - custom module for the music player
 --     panelText        - custom module that converts the output from a script
 --                        into a string or text for a widget 
 --     compInfo-Arch.sh - custom script, displays a wide variety of computer
@@ -66,6 +69,7 @@
 -- IMPORT MODULES
 -- **************
 
+local panelMusic = require("panelMusic")
 local panelText = require("panelText")
 
 
@@ -92,6 +96,9 @@ local volMus75 = "/home/gabeg/.config/awesome/icons/vol/volMus75-100.png"
 -- script that prints out current volume value
 vol_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol stat"
 chVol_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol "
+volMuteStat_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol muteStat"
+
+musicRunStat_cmd = "pgrep -c mocp"
 
 
 
@@ -116,13 +123,42 @@ end
 panelVolume = make_module('panelVolume',
                           function(panelVolume)
                               
+                              -- checks if mute is toggled
+                              function muteStat()
+                                  local status = panelText.subGetScript(volMuteStat_cmd)
+                                  status = string.sub(status, 2, 2)
+                                  
+                                  if status == "f" then 
+                                      muteTest = "mute" 
+                                  elseif status == "n" then
+                                      muteTest = "nomute"
+                                  end
+                                  
+                                  return muteTest
+                              end
+                              
+                              
+                              -- checks if music is running
+                              function musicStat()
+                                  local status = panelText.subGetScript(musicRunStat_cmd) + 0
+                                  if status > 0 then
+                                      musicTest = "music"
+                                  else
+                                      musicTest = "nomusic"
+                                  end
+                                  
+                                  return musicTest
+                              end
+                              
+                              
                               -- sets the icon image for the volume widget
-                              panelVolume.getIcon = function(panel, command, muteTest, musicTest)
+                              panelVolume.getIcon = function(panel, command)
                                   local percent = panelText.subGetScript(command)
-                                  local subPercent = percent:gsub('%%','')
+                                  local subPercent = percent:gsub('%%','') + 0
                                   local icon = ""
                                   
-                                  subPercent = subPercent + 0
+                                  muteTest = muteStat()
+                                  musicTest = musicStat()
                                   
                                   if musicTest == "music" then
                                       if muteTest == "mute" or subPercent == 0 then
@@ -198,22 +234,21 @@ panelVolume = make_module('panelVolume',
                               
                               
                               
+                                                          
+                              
                               -- returns the volume widget (image and text)
                               panelVolume.volume = function()
                                   myVolumeImage = wibox.widget.imagebox()
                                   
-                                  musicTest = panelText.subGetScript("pgrep -c mocp") + 0
+                                  panelVolume.getIcon(myVolumeImage, vol_cmd)
                                   
-                                  if musicTest > 0 then
-                                      musicTest = "music"
-                                  else
-                                      musicTest = "no"
-                                  end
                                   
-                                  panelVolume.getIcon(myVolumeImage, vol_cmd, "unmute", musicTest)
+                                  -- -- * SEE "panelMusic.lua" for why the code below is commented/uncommented
+                                  -- myVolumeImage:connect_signal("mouse::enter", function() panelVolume.hover(myVolumeImage); disp_volMenu(0)  end)
+                                  -- myVolumeImage:connect_signal("mouse::leave", function() naughty.destroy(volMenu) end)                                 
                                   
-                                  myVolumeImage:connect_signal("mouse::enter", function() panelVolume.hover(myVolumeImage); disp_volMenu(0)  end)
-                                  myVolumeImage:connect_signal("mouse::leave", function() naughty.destroy(volMenu) end)                                 
+                                  myVolumeImage:connect_signal("mouse::enter", function() panelVolume.hover(myVolumeImage); disp_volMenu(0); panelMusic.music()  end)
+                                  myVolumeImage:connect_signal("mouse::leave", function() naughty.destroy(volMenu); naughty.destroy(songMenu) end)                                 
                                   
                                   return myVolumeImage
                               end

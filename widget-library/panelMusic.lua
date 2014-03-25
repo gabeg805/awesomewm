@@ -145,6 +145,10 @@ panelMusic = make_module('panelMusic',
                                     
                                 local output = title .. "   " .. currTime .. "/" .. totalTime .. "  " 
                                 
+                                if title == nil then 
+                                    return nil
+                                end
+                                
                                 return output
                             end
                             
@@ -153,10 +157,22 @@ panelMusic = make_module('panelMusic',
                             function disp_musicMenu()
                                 local mocpRun = panelText.subGetScript("pgrep -c mocp") + 0
                                 
+                                if songMenu ~= nil then naughty.destroy(songMenu) end 
+                                
                                 if mocpRun > 0 then
                                     naughty.destroy(songMenu)
                                     
                                     song = musicSong()
+                                    
+                                    if song == nil then 
+                                        naughty.notify( { text = "Loading...",
+                                                                 font = "Inconsolata 10",
+                                                                 position = "bottom_right",
+                                                                 timeout = 0, hover_timeout = 0
+                                                        }
+                                                      ) 
+                                    end
+                                    
                                     songMenu = naughty.notify( { text = song,
                                                                  font = "Inconsolata 10",
                                                                  position = "bottom_right",
@@ -174,10 +190,29 @@ panelMusic = make_module('panelMusic',
                             end
                             
                             
+                            
+                            -- There are two possibilities for playing the music player, one is
+                            --     1) a constant popup that shows up on a timer at the bottom right
+                            --           of the screen,
+                            --     2) the other is showing the music player info by hovering over
+                            --           the volume icon
+                            --     *) make sure to leave one uncommented always and have the info
+                            --           in panelVolume.lua to reflect the change (if the top one is
+                            --           commented in "panelMusic.lua", then the top one should be 
+                            --           commented in "panelVolume.lua", and also 
+                            --               "gabegWidgets.music(5)"   LINE 97 in "aweInterface.lua"
+                            --           should be commented as well)
+                            
+                            -- -- music player popup 
+                            -- panelMusic.music = function(seconds)
+                            --     disp_musicMenu()
+                            --     musicTimer(seconds)
+                            -- end
+                            
+                            
                             -- music player popup
-                            panelMusic.music = function(seconds)
+                            panelMusic.music = function()
                                 disp_musicMenu()
-                                musicTimer(seconds)
                             end
                             
                             end

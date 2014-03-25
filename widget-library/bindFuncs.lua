@@ -115,7 +115,6 @@ bindFuncs = make_module('bindFuncs',
                               bindFuncs.signalVolume = function(sig)
                                   naughty.destroy(volMenu)
                                   
-                                  volToggle = volData
                                   volData = panelText.subGetScript(vol_cmd)
                                   
                                   if sig == "up" then
@@ -124,14 +123,6 @@ bindFuncs = make_module('bindFuncs',
                                       awful.util.spawn("amixer -c 0 set Master 5- unmute") 
                                   elseif sig == "mute" then
                                       awful.util.spawn("amixer -c 0 set Master toggle") 
-                                      
-                                      if volToggle ~= "MUTED" then 
-                                          volToggle = "MUTED" 
-                                      else
-                                          volToggle = panelText.subGetScript(vol_cmd)
-                                          sig = "unmute"
-                                      end
-                                      volData = volToggle
                                   end
                                   
                                   
@@ -143,16 +134,7 @@ bindFuncs = make_module('bindFuncs',
                                                               height = 30
                                                             } )                  
                                   
-                                  
-                                  musicTest = panelText.subGetScript("pgrep -c mocp") + 0
-                                  
-                                  if musicTest > 0 then
-                                      musicTest = "music"
-                                  else
-                                      musicTest = "no"
-                                  end
-                                  
-                                  panelVolume.getIcon(myVolumeImage, vol_cmd, sig, musicTest)
+                                  panelVolume.getIcon(myVolumeImage, vol_cmd)
                               end
                               
                           end
