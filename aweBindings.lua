@@ -158,7 +158,8 @@ globalkeys = awful.util.table.join(
     
     awful.key({ }, "Print", 
               function () 
-                  awful.util.spawn("scrot /home/gabeg/screenshot.png && sleep 0.1") 
+                  awful.util.spawn("scrot /home/gabeg/screenshot.png")
+                  os.execute("sleep 0.5")
                   naughty.notify( { text = "Screen Captured!", timeout = 1 } )
               end
              )
@@ -175,7 +176,7 @@ globalkeys = awful.util.table.join(
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
+    awful.key({ modkey, "Control" }, "f",  awful.client.floating.toggle                     ),
     awful.key({ modkey,           }, "m",      function (c) c.minimized = true               end),
     awful.key({ modkey,           }, "u",
         function (c)
