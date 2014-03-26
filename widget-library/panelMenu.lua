@@ -112,7 +112,7 @@ panelMenu = make_module('panelMenu',
                                                          } )
                                 
                                 mylauncher = awful.widget.launcher( { image = archyIcon, menu = myMainMenu } )
-                                mylauncher:connect_signal("mouse::leave", function() myMainMenu:toggle() end)
+                                -- mylauncher:connect_signal("mouse::leave", function() myMainMenu:toggle() end)
                                 return mylauncher
                             end
                             
