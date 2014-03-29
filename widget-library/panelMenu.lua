@@ -1,5 +1,5 @@
 -- 
--- Created By: Gabriel Gonzalez
+-- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
 -- Name:
@@ -69,7 +69,7 @@ local shuttingDown = "sudo shutdown -P now"
 local archyIcon = "/home/gabeg/.config/awesome/icons/arch-icon.png"
 local fireIcon = "/usr/lib/firefox/browser/icons/mozicon128.png"
 local emacsIcon = "/usr/share/emacs/24.3/etc/images/icons/hicolor/32x32/apps/emacs.png"
-
+local termIcon = "/home/gabeg/.config/awesome/icons/term-icon.png"
 
 
 -- *****************
@@ -103,11 +103,12 @@ panelMenu = make_module('panelMenu',
                                 
                                 
                                 myMainMenu = awful.menu( { items = { 
-                                                               { " Awesome", myAwesomeMenu, beautiful.awesome_icon },
-                                                               { " Firefox", browser, fireIcon },
-                                                               { " Emacs", text, emacsIcon },
-                                                               { " Reboot", rebooting }, 
-                                                               { " Shut Down", shuttingDown }
+                                                               { " Awesome",    myAwesomeMenu,  beautiful.awesome_icon },
+                                                               { " Firefox",    browser,        fireIcon               },
+                                                               { " Emacs",      text,           emacsIcon              },
+                                                               { " Terminal",   terminal,       termIcon               },
+                                                               { " Reboot",     rebooting                              }, 
+                                                               { " Shut Down",  shuttingDown                           }
                                                                    }
                                                          } )
                                 

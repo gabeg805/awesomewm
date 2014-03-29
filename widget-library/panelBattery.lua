@@ -1,5 +1,5 @@
 -- 
--- Created By: Gabriel Gonzalez  
+-- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)  
 -- 
 -- 
 -- Name:

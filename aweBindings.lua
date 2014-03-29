@@ -1,5 +1,5 @@
 -- 
--- Created By: Gabriel Gonzalez
+-- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
 -- Name:
@@ -66,6 +66,7 @@ local bindFuncs = require("bindFuncs")
 
 -- Mouse bindings
 root.buttons(awful.util.table.join(
+                 awful.button({ }, 1, function () myMainMenu:hide() end), 
                  awful.button({ }, 3, function () myMainMenu:toggle() end)
                                   )
             )
@@ -182,7 +183,7 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "f",  awful.client.floating.toggle                     ),
-    awful.key({ modkey,           }, "m",      function (c) c.minimized = true               end),
+    awful.key({ modkey, "Shift"   }, "m",      function (c) c.minimized = true               end),
     awful.key({ modkey,           }, "u",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
