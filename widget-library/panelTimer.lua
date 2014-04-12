@@ -1,20 +1,20 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- Created By: PERSON
 -- 
 -- 
 -- Name:
 -- 	
---     gabegWidgets
+--     temp
 -- 
 -- 
 -- Syntax: 
 -- 	
---     gabegWidgets = require("gabegWidgets")
+--     temp [NULL]
 -- 
 -- 
 -- Purpose:
 -- 	
---     Insert custom widgets to panel.
+--     PURPOSE
 -- 
 -- 
 -- Keywords:
@@ -24,52 +24,24 @@
 -- 
 -- Functions:
 -- 	
---     gabegWidgets.setTimer - set the widget refresh timer
+--     N/A
 -- 
 -- 
 -- Dependencies:
 --
---     awful     - Awesome builtin module
---     beautiful - Awesome builtin module
---     naughty   - Awesome builtin module
---     menubar   - Awesome builtin module
---     
---     panelLayouts    - custom module, sets the wallpaper and returns the Awesome tiling algorithms
---     panelMenu       - custom module, returns Awesome menu launcher
---     panelClock      - custom module, returns text clock (image and text)
---     panelText       - custom module, returns script output in string format and
---                       widget text format
---     panelBattery    - custom module, returns battery widget (image and text)
---     panelWireless   - custom module, returns wifi widget (image and text)
---     panelVolume     - custom module, returns volume widget (image and text)
---     panelTimer      - custom module, refreshes widgets with updated values
---     panelBrightness - custom module, returns brightness widget (image and text)
---     panelMusic      - custom module, returns music widget (image and text)
---
+--     N/A
+--   
 --   
 --  File Structure:
 --
---     * Edit Package Path
---     * Define Necessary Variables
---     * Import Modules
---     * Compile All The Modules
+--     * N/A
 -- 
 -- 
 -- Modification History:
 -- 	
---     gabeg Mar 08 2014 <> created
---     gabeg Mar 23 2014 <> changed the method of enabling the widget timer
+--     USR MON DAY YEAR <> created
 --
 -- ************************************************************************
-
-
-
-
--- *****************
--- EDIT PACKAGE PATH
--- *****************
-
-package.path = package.path .. ';/home/gabeg/.config/awesome/widget-library/?.lua'
 
 
 
@@ -78,17 +50,10 @@ package.path = package.path .. ';/home/gabeg/.config/awesome/widget-library/?.lu
 -- **************************
 
 -- script that prints out current computer info
-bat_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh bat"
 net_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net"
 vol_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol stat"
 
--- initialize counter to display 10min warning
-counter = 0
 
-
--- **************
--- IMPORT MODULES
--- **************
 
 local panelLayouts = require("panelLayouts")
 local panelMenu = require("panelMenu")

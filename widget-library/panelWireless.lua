@@ -160,6 +160,10 @@ panelWireless = make_module('panelWireless',
                                                                  awful.button({ }, 4, function () panelWireless.hover(myWirelessImage) end),
                                                                  awful.button({ }, 5, function () panelWireless.hover(myWirelessImage) end) ) 
                                                            )
+                                    
+                                    
+                                    -- Change wireless icon based on network signal shown
+                                    panelWireless.getIcon(myWirelessImage, net_cmd)
                                 end
                                 
                                 

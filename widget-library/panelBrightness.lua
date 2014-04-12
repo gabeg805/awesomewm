@@ -111,21 +111,33 @@ panelBrightness = make_module('panelBrightness',
                                   panelBrightness.getIcon = function(panel, command)
                                       local percent = panelText.subGetScript(command)
                                       local subPercent = percent:gsub('%W','')
+                                      local subStatus = nil
                                       
-                                      subPercent = subPercent + 0
+                                      if tonumber(subPercent) ~= nil then 
+                                          subPercent = subPercent + 0
+                                      else
+                                          subPercent = 'Calculating...'
+                                          subStatus = "C"
+                                      end
                                       
-                                      if subPercent > 0 and subPercent < 20 then
+                                      if subStatus == "C" then 
                                           icon = bright0
-                                      elseif subPercent >= 20 and subPercent < 40 then
-                                          icon = bright20
-                                      elseif subPercent >= 40 and subPercent < 50 then
-                                          icon = bright40
-                                      elseif subPercent >= 50 and subPercent < 60 then
-                                          icon = bright50
-                                      elseif subPercent >= 60 and subPercent < 80 then
-                                          icon = bright60
-                                      elseif subPercent >= 80 and subPercent <= 100 then
-                                          icon = bright80
+                                      else
+                                                                                
+                                          if subPercent > 0 and subPercent < 20 then
+                                              icon = bright0
+                                          elseif subPercent >= 20 and subPercent < 40 then
+                                              icon = bright20
+                                          elseif subPercent >= 40 and subPercent < 50 then
+                                              icon = bright40
+                                          elseif subPercent >= 50 and subPercent < 60 then
+                                              icon = bright50
+                                          elseif subPercent >= 60 and subPercent < 80 then
+                                              icon = bright60
+                                          elseif subPercent >= 80 and subPercent <= 100 then
+                                              icon = bright80
+                                          end
+                                          
                                       end
                                       
                                       panel:set_image(icon)
@@ -138,13 +150,11 @@ panelBrightness = make_module('panelBrightness',
                                       
                                       brightData = panelText.subGetScript(bright_cmd)
                                       
-                                      brightMenu = naughty.notify( { text = string.format('<span font_desc="%s">%s</span>', 
-                                                                                          "Inconsolata 10",  
-                                                                                          "Brightness: " .. brightData
-                                                                                         ),
+                                      brightMenu = naughty.notify( { text = "Brightness: " .. brightData,
+                                                                     font = "Inconsolata 10",  
                                                                      timeout = 0, hover_timeout = 0,
                                                                      width = 130,
-                                                                     height = 30,
+                                                                     height = 30
                                                                    } )
                                   end
                                   
@@ -187,8 +197,7 @@ panelBrightness = make_module('panelBrightness',
                                       
                                       myBrightnessImage:connect_signal("mouse::enter", function() panelBrightness.hover(myBrightnessImage); disp_brightMenu(0)  end)
                                       myBrightnessImage:connect_signal("mouse::leave", function() naughty.destroy(brightMenu) end)
-                                      --panelBrightness.hover(myBrightnessImage)
-                                      
+                                                                            
                                       return myBrightnessImage
                                   end
                                   

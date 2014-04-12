@@ -93,11 +93,13 @@ myBrightnessImage = gabegWidgets.brightness()
 -- enable the widget timer
 gabegWidgets.setTimer( myBatteryImage, myBatteryTextBox, myWirelessImage, myVolumeImage, 60)
 
-
 -- -- set the music player popup
 -- -- * SEE "panelMusic.lua" for why the code below is commented/uncommented
 -- gabegWidgets.music(5)
 
+
+-- set the cute icon
+-- myCuteImage = gabegWidgets.cute()
 
 
 
@@ -208,9 +210,7 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
 
-    -- right_music:add(myMusicImage)
-    -- right_music:add(myMusicTextBox)
-    
+    -- right_layout:add(myCuteImage)
     right_layout:add(arrEnd)
     right_layout:add(myBrightnessImage)
     right_layout:add(arr3)

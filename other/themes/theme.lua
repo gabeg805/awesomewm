@@ -17,9 +17,9 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.border_width  = 1
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_width  = 2
+theme.border_normal = "#ccedff"
+theme.border_focus  = "#00a5ff"
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
@@ -33,8 +33,8 @@ theme.border_marked = "#91231c"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Display the taglist squares
-theme.taglist_squares_sel   = "/usr/share/awesome/themes/default/taglist/squarefw.png"
-theme.taglist_squares_unsel = "/usr/share/awesome/themes/default/taglist/squarew.png"
+theme.taglist_squares_sel   = "/home/gabeg/.config/awesome/other/themes/taglist/arrowfw.png"
+theme.taglist_squares_unsel = "/home/gabeg/.config/awesome/other/themes/taglist/arroww.png"
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]

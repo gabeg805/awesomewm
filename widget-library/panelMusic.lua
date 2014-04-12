@@ -166,9 +166,9 @@ panelMusic = make_module('panelMusic',
                                     
                                     if song == nil then 
                                         naughty.notify( { text = "Loading...",
-                                                                 font = "Inconsolata 10",
-                                                                 position = "bottom_right",
-                                                                 timeout = 0, hover_timeout = 0
+                                                          font = "Inconsolata 10",
+                                                          position = "bottom_right",
+                                                          timeout = 0, hover_timeout = 0
                                                         }
                                                       ) 
                                     end

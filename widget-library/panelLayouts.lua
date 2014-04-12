@@ -107,7 +107,7 @@ panelLayouts = make_module('panelLayouts',
                                    
                                    
                                    -- add screen tags to workspaces
-                                   tags = { names = { "1", "2", "3", "4", "5" } }
+                                   tags = { names = { "1", "2", "3", "4", "5", "6", "7" } }
                                    
                                    
                                    -- Each screen has its own tag table.

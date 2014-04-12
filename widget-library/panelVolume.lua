@@ -193,15 +193,19 @@ panelVolume = make_module('panelVolume',
                               -- displays the popup
                               function disp_volMenu(val)
                                   naughty.destroy(volMenu)
-
+                                  
+                                  wide = 110
                                   volData = panelText.subGetScript(vol_cmd)
                                   
-                                  volMenu = naughty.notify( { text = string.format('<span font_desc="%s">%s</span>',
-                                                                                   "Inconsolata 10",  
-                                                                                   "Volume: " .. volData
-                                                                                  ),
+                                  if muteTest == "mute" then 
+                                      volData = volData:gsub('%%', '%%  (Muted)')
+                                      wide = 160
+                                  end
+                                  
+                                  volMenu = naughty.notify( { text = "Volume: " .. volData, 
+                                                              font = "Inconsolata 10", 
                                                               timeout = 0, hover_timeout = 0,
-                                                              width = 110,
+                                                              width = wide,
                                                               height = 30
                                                             } )
                               end
@@ -230,6 +234,10 @@ panelVolume = make_module('panelVolume',
                                                              awful.button({ }, 4, function() add_volMenu(1) end),
                                                              awful.button({ }, 5, function() add_volMenu(-1) end) ) 
                                                        )
+                                  
+                                  
+                                  -- Change Volume based on if music is playing 
+                                  panelVolume.getIcon(myVolumeImage, vol_cmd)
                               end
                               
                               

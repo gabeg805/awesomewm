@@ -115,6 +115,7 @@ bindFuncs = make_module('bindFuncs',
                               bindFuncs.signalVolume = function(sig)
                                   naughty.destroy(volMenu)
                                   
+                                  wide = 110
                                   volData = panelText.subGetScript(vol_cmd)
                                   
                                   if sig == "up" then
@@ -123,16 +124,21 @@ bindFuncs = make_module('bindFuncs',
                                       awful.util.spawn("amixer -c 0 set Master 5- unmute") 
                                   elseif sig == "mute" then
                                       awful.util.spawn("amixer -c 0 set Master toggle") 
+
+                                      if muteTest ~= "mute" then 
+                                          volData = volData:gsub('%%', '%%  (Muted)')
+                                          wide = 160
+                                      end
                                   end
                                   
                                   
-                                  
                                   volMenu = naughty.notify( { text = "Volume: " .. volData, 
-                                                              font = "Inconsolata 10",  
+                                                              font = "Inconsolata 10", 
                                                               timeout = 1, hover_timeout = 0,
-                                                              width = 110,
+                                                              width = wide,
                                                               height = 30
-                                                            } )                  
+                                                            } )
+                                  
                                   
                                   panelVolume.getIcon(myVolumeImage, vol_cmd)
                               end

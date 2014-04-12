@@ -57,6 +57,19 @@
 -- **************
 
 local bindFuncs = require("bindFuncs")
+local keydoc = require("keydoc")
+
+
+
+-- **************************
+-- DEFINE NECESSARY VARIABLES
+-- **************************
+
+-- define mod key
+modkey = "Mod4"
+
+-- make the taskbar initially invisible (Hit "Modkey + t" to make it visible)
+myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
 
 
 
@@ -77,75 +90,14 @@ root.buttons(awful.util.table.join(
 -- KEY BINDINGS
 -- ************
 
--- define mod key
-modkey = "Mod4"
-
--- make the taskbar initially invisible (there's a macro to make it visible below)
-myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
-
-
 -- Key bindings
 globalkeys = awful.util.table.join(
-    
-    -- Restore Minimized Client
-    awful.key({ modkey, "Control" }, "m", awful.client.restore),
-    
-    -- Toggle Panel Visibility
-    awful.key({ modkey }, "t", function ()
-                  myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
-                               end),    
-    
-    -- Change Viewport 
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-    
-    -- Change focus
-    awful.key({ modkey,           }, "j",
-              function ()
-                  awful.client.focus.byidx( 1)
-                  if client.focus then client.focus:raise() end
-              end
-             ),
-    awful.key({ modkey,           }, "k",
-              function ()
-                  awful.client.focus.byidx(-1)
-                  if client.focus then client.focus:raise() end
-              end
-             ),
 
-    
-    
-    -- Layout manipulation
-    awful.key({ modkey, "Control" }, "j", function () awful.client.swap.byidx( 1) end),
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(-1) end),
-    awful.key({ modkey,           }, "Tab",
-              function ()
-                  awful.client.focus.history.previous()
-                  if client.focus then
-                      client.focus:raise()
-                  end
-              end
-             ),
-    
-    
-    -- Open Terminal and Restart/Quit Awesome
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
-    
-    -- Change length of window
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incmwfact(-0.05)    end),
-    
-    -- change layout algorithm
-    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
-    
-    
-    -- Prompt (run: PROGRAM)
-    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
-    
+
+
+    -- -----------
+    -- SYSTEM KEYS
+    -- -----------
     
     -- brightness keys
     awful.key({ }, "XF86MonBrightnessUp", function() bindFuncs.signalBright("up") end),
@@ -168,8 +120,138 @@ globalkeys = awful.util.table.join(
                   os.execute("sleep 0.5")
                   naughty.notify( { text = "Screen Captured!", timeout = 1 } )
               end
-             )
+             ),
         
+
+
+
+
+
+    -- Display keybinding documentation
+    awful.key({ modkey, }, "F1", keydoc.display), 
+    
+    
+
+    -- -----------------------------
+    -- DOCUMENT LAYOUT MANIPULATIONS
+    -- -----------------------------
+    
+    keydoc.group("Layout Manipulation"),
+    
+    
+    -- Change layout algorithm
+    awful.key({ modkey,           }, "space", 
+              function () awful.layout.inc(layouts,  1) end,
+              "Change to the next layout algorithm"),
+    
+    awful.key({ modkey, "Shift"   }, "space", 
+              function () awful.layout.inc(layouts, -1) end,
+              "Change to the previous layout algorithm"),
+    
+
+    -- Toggle Panel Visibility
+    awful.key({ modkey }, "t", 
+              function ()
+                  myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
+              end,
+             "Toggel 'Tasklist Panel' visibility"),    
+    
+    
+    
+    
+    -- --------------------------
+    -- DOCUMENT WINDOW MANAGEMENT
+    -- --------------------------
+    
+    keydoc.group("Window Management"),
+    
+    
+    -- Client window location
+    awful.key({ modkey, "Control" }, "j", 
+              function () awful.client.swap.byidx( 1) end,
+              "Change window location by swapping with other windows counterclockwise"),
+    
+    awful.key({ modkey, "Shift"   }, "j", 
+              function () awful.client.swap.byidx(-1) end,
+              "Change window location by swapping with other windows clockwise"),
+    
+    
+    -- Change focus
+    awful.key({ modkey,           }, "j",
+              function ()
+                  awful.client.focus.byidx( 1)
+                  if client.focus then client.focus:raise() end
+              end,
+              "Change window focus counterclockwise"),
+    
+    
+    awful.key({ modkey,           }, "k",
+              function ()
+                  awful.client.focus.byidx(-1)
+                  if client.focus then client.focus:raise() end
+              end,
+              "Change window focus clockwise"),
+
+    awful.key({ modkey,           }, "Tab",
+              function ()
+                  awful.client.focus.history.previous()
+                  if client.focus then
+                      client.focus:raise()
+                  end
+              end,
+              "Change window focus to previously handled window"),
+    
+    
+    -- Change length of window
+    awful.key({ modkey,           }, "l", 
+              function () awful.tag.incmwfact( 0.05)    end,
+              "Increase master window length"),
+    awful.key({ modkey, "Shift"   }, "l", 
+              function () awful.tag.incmwfact(-0.05)    end,
+              "Decrease master window length"),
+    
+    
+    -- Restore Minimized Client
+    awful.key({ modkey, "Control" }, "m", 
+              awful.client.restore,
+              "Restore minimized window"),
+    
+    
+    
+    -- ------------------------------
+    -- DOCUMENT AWESOME MAIN COMMANDS
+    -- ------------------------------
+    
+    keydoc.group("Main Awesome Commands"),
+    
+    -- Open Terminal
+    awful.key({ modkey,           }, "Return", 
+              function () awful.util.spawn(terminal) end,
+             "Open terminal"),
+
+    
+    -- Restart/Quit Awesome
+    awful.key({ modkey, "Control" }, "r", awesome.restart,
+             "Restart Awesome"),
+    
+    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+             "Quit Awesome"),
+    
+    
+    -- Change Workspace 
+    awful.key({ modkey,           }, "Left", 
+              awful.tag.viewprev, "Switch to the workspace on the left"),
+    
+    awful.key({ modkey,           }, "Right", 
+              awful.tag.viewnext, "Switch to the workspace on the right"),
+    
+    
+    -- Prompt (run: PROGRAM)
+    awful.key({ modkey },  "r",  
+              function () mypromptbox[mouse.screen]:run() end,
+              "Bring up a prompt to execute a command")
+    
+    
                                   )
 
 
@@ -180,7 +262,7 @@ globalkeys = awful.util.table.join(
 
 -- Make window Fullscreen AND Kill Focused Process
 clientkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
+     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "f",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Shift"   }, "m",      function (c) c.minimized = true               end),
@@ -273,15 +355,15 @@ awful.rules.rules = {
 client.connect_signal("manage", 
                       function (c, startup)
                           
-                          -- Enable sloppy focus
-                          c:connect_signal("mouse::enter", 
-                                           function(c)
-                                               if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-                                                   and awful.client.focus.filter(c) then
-                                               client.focus = c
-                                               end
-                                           end
-                                          )
+                          -- -- Enable focus on mouse-over a window
+                          -- c:connect_signal("mouse::enter", 
+                          --                  function(c)
+                          --                      if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+                          --                          and awful.client.focus.filter(c) then
+                          --                      client.focus = c
+                          --                      end
+                          --                  end
+                          --                 )
                           
                           if not startup then
                               -- Set the windows at the slave,

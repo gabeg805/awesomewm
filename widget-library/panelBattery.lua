@@ -132,11 +132,13 @@ panelBattery = make_module('panelBattery',
                                    local percent = panelText.subGetScript(bat_cmd)
                                    local subPercent = percent:gsub('%%','') 
                                    
-                                   -- sometimes this line makes Awesome print an error about 
-                                   --  performing arithmetic to a string, just ignore it. 
-                                   --  I haven't figured out why yet but it seems like 
-                                   --  a harmless error
-                                   subPercent = subPercent + 0
+                                   
+                                   if tonumber(subPercent) ~= nil then 
+                                       subPercent = subPercent + 0
+                                   else
+                                       subStatus = "C"
+                                   end
+                                   
                                    
                                    -- shut down computer
                                    if subPercent <= 20 and subStatus ~= "C" then
@@ -147,6 +149,7 @@ panelBattery = make_module('panelBattery',
                                    -- displays the warning
                                    if subPercent < 30 and subStatus ~= "C" then
                                        naughty.notify( {
+                                                           preset = naughty.config.presets.critical, 
                                                            text = "Arch Linux will shutdown at 20%.",
                                                            title = "SYSTEM ALERT",
                                                            position = "top_right",
