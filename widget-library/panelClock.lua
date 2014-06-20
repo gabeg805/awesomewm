@@ -1,5 +1,5 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)   
 -- 
 -- 
 -- Name:
@@ -87,7 +87,7 @@ end
 panelClock = make_module('panelClock',
                          function(panelClock)
                              
-                             -- display the calendar
+                             -- Display the calendar
                              function disp_cal(val)
                                  naughty.destroy(calendar)
                                  
@@ -98,11 +98,11 @@ panelClock = make_module('panelClock',
                                                             } )
                              end
                              
-                             -- enable month switching via scroll wheel
+                             -- Enable hover mouse events 
                              panelClock.hover = function(mytextclockImage, mytextclock)
                                  local offset = 0
                                  
-                                 -- add the calendar
+                                 -- Create new calendar (for scrollwheel switching)
                                  function add_calendar(inc_offset)
                                      local save_offset = offset
                                      offset = save_offset + inc_offset
@@ -116,7 +116,7 @@ panelClock = make_module('panelClock',
                                  end
                                  
                                                                   
-                                 -- enable mouse events for textclock widget
+                                 -- Enable mouse events for textclock widget
                                  mytextclock:buttons( awful.util.table.join( 
                                                           awful.button({ }, 4, function() add_calendar(-1) end),
                                                           awful.button({ }, 5, function() add_calendar(1)  end) )
@@ -130,21 +130,52 @@ panelClock = make_module('panelClock',
                              
                              
                              
-                             -- returns the clock widget 
+                             -- Returns the clock widget 
                              panelClock.clock = function()
-                                 -- create the textclock widget
+                                 
+                                 -- Initialize the textclock widget
                                  mytextclockImage = wibox.widget.imagebox()
                                  mytextclockImage:set_image(clockIcon)
                                  
+                                 -- Define clock setup
                                  mytextclock = awful.widget.textclock(
                                      '<span background="#777E76" font="Iconsolata 10" color="#EEEEEE"> ' ..
                                          '%a %b %d  %I:%M %p ' ..
                                          '</span>'
                                                                      )
                                  
-                                 mytextclock:connect_signal("mouse::enter", function() panelClock.hover(mytextclockImage, mytextclock); disp_cal("")  end)
-                                 mytextclock:connect_signal("mouse::leave", function() naughty.destroy(calendar) end)
                                  
+                                 -- Enable textclock mouse events
+                                 mytextclock:connect_signal("mouse::enter", 
+                                                            function() 
+                                                                panelClock.hover(mytextclockImage, mytextclock)
+                                                                disp_cal("")  
+                                                            end
+                                                           )
+                                 
+                                 mytextclock:connect_signal("mouse::leave", 
+                                                            function() 
+                                                                naughty.destroy(calendar) 
+                                                            end
+                                                           )
+                                 
+                                 
+                                 -- Enabling clock image mouse events
+                                 mytextclockImage:connect_signal("mouse::enter", 
+                                                                 function() 
+                                                                     panelClock.hover(mytextclockImage, mytextclock)
+                                                                     disp_cal("")  
+                                                                 end
+                                                                )
+                                 
+                                 mytextclockImage:connect_signal("mouse::leave", 
+                                                                 function() 
+                                                                     naughty.destroy(calendar) 
+                                                                 end
+                                                                )
+
+                                 
+                                 -- Return the clock widget
                                  return mytextclockImage, mytextclock 
                              end
                          end

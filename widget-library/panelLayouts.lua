@@ -70,28 +70,28 @@ end
 panelLayouts = make_module('panelLayouts',
                            function(panelLayouts)
                                
-                               -- set the wallpaper
+                               -- Set the wallpaper
                                panelLayouts.wallpaper = function()
                                    
-                                   -- themes define colours, icons, and wallpapers
+                                   -- Themes define colours, icons, and wallpapers
                                    beautiful.init("/usr/share/awesome/themes/default/theme.lua")
-                                   astroWallpaper = "/mnt/Linux/Share/docs/pics/Sugarpine.jpg"
+                                   local sunWallpaper = "/mnt/Linux/Share/docs/pics/mountain-sunrise.jpg"
                                    
                                    
-                                   -- put the wallpaper on each screen
+                                   -- Put the wallpaper on each screen
                                    if beautiful.wallpaper then
                                        for s = 1, screen.count() do
                                            -- gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-                                           gears.wallpaper.maximized(astroWallpaper, s, true)
+                                           gears.wallpaper.maximized(sunWallpaper, s, true)
                                        end
                                    end
                                end
                                
                                
                                
-                               -- define awesome tiling layouts (algorithms)
+                               -- Define awesome tiling layouts (algorithms)
                                panelLayouts.layouts = function()
-                                   local layouts = {
+                                   layouts = {
                                        awful.layout.suit.tile,
                                        awful.layout.suit.tile.left,
                                        
@@ -100,14 +100,12 @@ panelLayouts = make_module('panelLayouts',
                                        
                                        awful.layout.suit.fair,
                                        
-                                       awful.layout.suit.max,
-                                       awful.layout.suit.magnifier,
                                        awful.layout.suit.floating
                                    }
                                    
                                    
-                                   -- add screen tags to workspaces
-                                   tags = { names = { "1", "2", "3", "4", "5", "6", "7" } }
+                                   -- Add screen tags to workspaces
+                                   tags = { names = { "1", "2", "3", "4", "5"} }
                                    
                                    
                                    -- Each screen has its own tag table.

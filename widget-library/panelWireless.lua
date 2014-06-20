@@ -85,8 +85,8 @@ local wire50 = "/home/gabeg/.config/awesome/icons/wireless/wire50-75.png"
 local wire75 = "/home/gabeg/.config/awesome/icons/wireless/wire75-100.png"
 
 -- scripts to get computer info
-net_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net"
-ssid_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net ssid"
+-- net_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net"
+-- ssid_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net ssid"
 
 
 
@@ -116,12 +116,14 @@ panelWireless = make_module('panelWireless',
                                     local percent = panelText.subGetScript(net_cmd)
                                     local subPercent = percent:gsub('%%', '') 
                                     local subStatus = string.sub(percent, 0, 1)
-                                    local icon = ""
+                                    local icon = nil
                                     
+                                    -- Check for lack of wifi connection
                                     if subStatus == "S" then 
                                         icon = wireNone
                                     else
                                         
+                                        -- Various wifi icons
                                         subPercent = subPercent + 0
                                         
                                         if subPercent > 0 and subPercent < 25 then
@@ -139,26 +141,28 @@ panelWireless = make_module('panelWireless',
                                 end
                                 
                                 
-                                -- makes wifi widget hoverable (displays popup)
+                                -- Make wifi widget hoverable (displays popup)
                                 panelWireless.hover = function(myWirelessImage)
+                                    
+                                    -- Kill old wifi notification
                                     naughty.destroy(wireMenu)
                                                                             
-                                    -- computer info to display on popup
-                                    ssidData = panelText.subGetScript(ssid_cmd)
-                                    netData  = panelText.subGetScript(net_cmd)
+                                    -- Computer info to display on popup
+                                    local ssidData = panelText.subGetScript(ssid_cmd)
+                                    local netData  = panelText.subGetScript(net_cmd)
                                     
+                                    
+                                    -- Display Wifi notification
                                     wireMenu = naughty.notify( { text = ssidData .. "Strength: " .. netData,
                                                                  font = "Inconsolata 10", 
                                                                  timeout = 0, hover_timeout = 0,
-                                                                 width = 150,
-                                                                 height = 45,
+                                                                 height = 45
                                                                } )
                                     
                                     
-                                    -- enable mouse events for textclock widget
+                                    -- Enable mouse events for textclock widget
                                     myWirelessImage:buttons( awful.util.table.join( 
-                                                                 awful.button({ }, 4, function () panelWireless.hover(myWirelessImage) end),
-                                                                 awful.button({ }, 5, function () panelWireless.hover(myWirelessImage) end) ) 
+                                                                 awful.button({ }, 1, function () panelWireless.hover(myWirelessImage) end) ) 
                                                            )
                                     
                                     
@@ -167,15 +171,22 @@ panelWireless = make_module('panelWireless',
                                 end
                                 
                                 
-                                -- returns the wifi widget (image and text)
+                                
+                                -- Returns the wifi widget (image and text)
                                 panelWireless.wireless = function()
+                                    
+                                    -- Initialize wifi widget
                                     myWirelessImage = wibox.widget.imagebox()
                                     
+                                    -- Set widget icon
                                     panelWireless.getIcon(myWirelessImage, net_cmd)
                                     
+                                    -- Enable mouse events
                                     myWirelessImage:connect_signal("mouse::enter", function() panelWireless.hover(myWirelessImage) end)
-                                    myWirelessImage:connect_signal("mouse::leave", function() naughty.destroy(wireMenu) end)                                    
+                                    myWirelessImage:connect_signal("mouse::leave", function() naughty.destroy(wireMenu) end) 
                                     
+                                    
+                                    -- Return wifi widget
                                     return myWirelessImage
                                 end
                                 

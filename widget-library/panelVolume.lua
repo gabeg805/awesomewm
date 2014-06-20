@@ -26,6 +26,7 @@
 -- 	
 --     muteStat            - checks if mute is toggled
 --     musicStat           - checks if MOCP (the music player) is running
+--     getIcon             - returns icon path
 --     panelVolume.getIcon - returns the correct volume icon given the current
 --                           volume percentage value
 --     disp_volMenu        - enables the popup
@@ -93,14 +94,6 @@ local volMus50 = "/home/gabeg/.config/awesome/icons/vol/volMus50-75.png"
 local volMus75 = "/home/gabeg/.config/awesome/icons/vol/volMus75-100.png"
 
 
--- script that prints out current volume value
-vol_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol stat"
-chVol_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol "
-volMuteStat_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol muteStat"
-
-musicRunStat_cmd = "pgrep -c mocp"
-
-
 
 -- *****************
 -- DEFINE THE MODULE
@@ -123,10 +116,15 @@ end
 panelVolume = make_module('panelVolume',
                           function(panelVolume)
                               
-                              -- checks if mute is toggled
+                              -- Check if mute is toggled
                               function muteStat()
+
+                                  -- Check if volume is muted
                                   local status = panelText.subGetScript(volMuteStat_cmd)
                                   status = string.sub(status, 2, 2)
+                                  
+                                  -- Initialize mute test variable
+                                  local muteTest = nil
                                   
                                   if status == "f" then 
                                       muteTest = "mute" 
@@ -138,9 +136,10 @@ panelVolume = make_module('panelVolume',
                               end
                               
                               
-                              -- checks if music is running
-                              function musicStat()
+                              -- Check if music is running
+                              local function musicStat()
                                   local status = panelText.subGetScript(musicRunStat_cmd) + 0
+                                  
                                   if status > 0 then
                                       musicTest = "music"
                                   else
@@ -151,15 +150,17 @@ panelVolume = make_module('panelVolume',
                               end
                               
                               
-                              -- sets the icon image for the volume widget
-                              panelVolume.getIcon = function(panel, command)
+                              -- Return icon string
+                              local function getIcon(command)
                                   local percent = panelText.subGetScript(command)
                                   local subPercent = percent:gsub('%%','') + 0
-                                  local icon = ""
+                                  local icon = nil
                                   
-                                  muteTest = muteStat()
-                                  musicTest = musicStat()
+                                  local muteTest = muteStat()
+                                  local musicTest = musicStat()
                                   
+                                  
+                                  -- Check if music is running
                                   if musicTest == "music" then
                                       if muteTest == "mute" or subPercent == 0 then
                                           icon = volMusMute
@@ -173,6 +174,8 @@ panelVolume = make_module('panelVolume',
                                           icon = volMus75
                                       end
                                   else
+                                      
+                                      -- Display non-music icons
                                       if muteTest == "mute" or subPercent == 0 then
                                           icon = volMute
                                       elseif subPercent > 0 and subPercent < 25 then
@@ -185,23 +188,40 @@ panelVolume = make_module('panelVolume',
                                           icon = vol75
                                       end
                                   end
-                                  
+
+                                  return icon
+                              end
+                              
+                              
+                              -- Set the icon image for the volume widget
+                              panelVolume.getIcon = function(panel, command)
+                                  local icon = getIcon(command)
                                   panel:set_image(icon)
                               end
                               
                               
-                              -- displays the popup
-                              function disp_volMenu(val)
+                              -- Displays the volume notification
+                              local function disp_volMenu(val)
+                                  
+                                  -- Kill old notification bubbles
                                   naughty.destroy(volMenu)
                                   
+                                  -- Notification width
                                   wide = 110
-                                  volData = panelText.subGetScript(vol_cmd)
+                                  
+                                  -- Notification volume data
+                                  local volData = panelText.subGetScript(vol_cmd)
+                                  
+                                  -- Mute test
+                                  local muteTest = muteStat()
                                   
                                   if muteTest == "mute" then 
                                       volData = volData:gsub('%%', '%%  (Muted)')
-                                      wide = 160
+                                      wide = 170
                                   end
                                   
+                                  
+                                  -- Display the notification
                                   volMenu = naughty.notify( { text = "Volume: " .. volData, 
                                                               font = "Inconsolata 10", 
                                                               timeout = 0, hover_timeout = 0,
@@ -211,54 +231,82 @@ panelVolume = make_module('panelVolume',
                               end
                               
                               
-                              -- make the popup increment volume with scrolling
-                              panelVolume.hover = function(myVolumeImage) 
+                              -- Make the popup increment volume with scrolling
+                              panelVolume.hover = function(myVolumeLauncher, myMusicMenu) 
                                   local volMenu = nil
                                   local temp = panelText.subGetScript(vol_cmd)
                                   local offset = temp:gsub('%%','') + 0
                                   
-                                  -- display the volMenu popup
+                                  -- Display the volMenu popup
                                   function add_volMenu(incr)
                                       local saveOffset = offset
                                       offset = saveOffset + incr
                                       
-                                      os.execute(chVol_cmd .. offset)
+                                      os.execute(chVol_cmd .. "  " .. offset)
                                       
                                       disp_volMenu(offset)
                                   end
-                                 
                                   
                                   
-                                  -- enable mouse events for textclock widget
-                                  myVolumeImage:buttons( awful.util.table.join( 
-                                                             awful.button({ }, 4, function() add_volMenu(1) end),
-                                                             awful.button({ }, 5, function() add_volMenu(-1) end) ) 
+                                  -- Enable mouse events for textclock widget
+                                  myVolumeLauncher:buttons( awful.util.table.join( 
+                                                                awful.button({ }, 1, function() myMusicMenu:toggle() end), 
+                                                                awful.button({ }, 4, function() add_volMenu(1) end),
+                                                                awful.button({ }, 5, function() add_volMenu(-1) end) ) 
                                                        )
                                   
-                                  
-                                  -- Change Volume based on if music is playing 
-                                  panelVolume.getIcon(myVolumeImage, vol_cmd)
                               end
                               
                               
                               
-                                                          
                               
-                              -- returns the volume widget (image and text)
+                              
+                              -- Returns the volume widget (image and text)
                               panelVolume.volume = function()
-                                  myVolumeImage = wibox.widget.imagebox()
                                   
-                                  panelVolume.getIcon(myVolumeImage, vol_cmd)
+                                  -- Create the menu for a laucher widget 
+                                  myMusicMenu = awful.menu( { items = {
+                                                                  { "Play/Pause Song",    musicPause    },
+                                                                  { "Play Next Song",     musicNextSong },
+                                                                  { "Play Previous Song", musicPrevSong },
+                                                                  { "Replay Playlist",    musicReplay    },
+                                                                  { "Exit Music Player",  musicExit     }
+                                                                      }, 
+                                                              theme = { width = 300, height = 30 } 
+                                                            } )
                                   
                                   
-                                  -- -- * SEE "panelMusic.lua" for why the code below is commented/uncommented
-                                  -- myVolumeImage:connect_signal("mouse::enter", function() panelVolume.hover(myVolumeImage); disp_volMenu(0)  end)
-                                  -- myVolumeImage:connect_signal("mouse::leave", function() naughty.destroy(volMenu) end)                                 
+                                  -- Create the Launcher
+                                  local volumeIcon = getIcon(vol_cmd)
+                                  myVolumeLauncher = awful.widget.launcher( { image = volumeIcon, menu = myMusicMenu} )
                                   
-                                  myVolumeImage:connect_signal("mouse::enter", function() panelVolume.hover(myVolumeImage); disp_volMenu(0); panelMusic.music()  end)
-                                  myVolumeImage:connect_signal("mouse::leave", function() naughty.destroy(volMenu); naughty.destroy(songMenu) end)                                 
                                   
-                                  return myVolumeImage
+                                  
+                                  -- Enable mouse events for launcher
+                                  myVolumeLauncher:connect_signal("mouse::enter", 
+                                                                  function() 
+                                                                      
+                                                                      -- Reset volume icon
+                                                                      volumeIcon = getIcon(vol_cmd)
+                                                                      myVolumeLauncher:set_image(volumeIcon)
+                                                                      
+                                                                      -- Enable mouse hover events
+                                                                      panelVolume.hover(myVolumeLauncher, myMusicMenu)
+                                                                      disp_volMenu(0)
+                                                                      panelMusic.music()  
+                                                                  end
+                                                                 )
+                                  
+                                  myVolumeLauncher:connect_signal("mouse::leave", 
+                                                                  function() 
+                                                                      naughty.destroy(volMenu)
+                                                                      naughty.destroy(songMenu) 
+                                                                  end
+                                                                 ) 
+                                  
+                                  
+                                  -- Return volume launcher
+                                  return myVolumeLauncher
                               end
                               
                           end

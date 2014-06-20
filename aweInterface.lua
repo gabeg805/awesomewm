@@ -80,6 +80,7 @@ layouts = gabegWidgets.layouts()
 
 -- create Awesome menu widget
 myLauncher = gabegWidgets.aweMenu()
+-- myOrigLauncher = gabegWidgets.resetAweMenu()
 
 -- create Awesome text clock widget
 myTextClockImage, myTextClock = gabegWidgets.clock()
@@ -91,11 +92,7 @@ myVolumeImage = gabegWidgets.volume()
 myBrightnessImage = gabegWidgets.brightness()
 
 -- enable the widget timer
-gabegWidgets.setTimer( myBatteryImage, myBatteryTextBox, myWirelessImage, myVolumeImage, 60)
-
--- -- set the music player popup
--- -- * SEE "panelMusic.lua" for why the code below is commented/uncommented
--- gabegWidgets.music(5)
+gabegWidgets.setTimer( myBatteryImage, myBatteryTextBox, myWirelessImage, myVolumeImage, 120)
 
 
 -- set the cute icon
@@ -112,12 +109,14 @@ arr1 = wibox.widget.imagebox()
 arr2 = wibox.widget.imagebox()
 arr3 = wibox.widget.imagebox()
 arrEnd = wibox.widget.imagebox()
+usbDev = wibox.widget.imagebox()
 
 arr0:set_image("/home/gabeg/.config/awesome/icons/powerarrow/arr0.png")
 arr1:set_image("/home/gabeg/.config/awesome/icons/powerarrow/arr1.png")
 arr2:set_image("/home/gabeg/.config/awesome/icons/powerarrow/arr2.png")
 arr3:set_image("/home/gabeg/.config/awesome/icons/powerarrow/arr3.png")
 arrEnd:set_image("/home/gabeg/.config/awesome/icons/powerarrow/arrEnd.png")
+-- usbDev:set_image("/home/gabeg/yo.png")
 
 
 
@@ -140,7 +139,8 @@ mytaglist.buttons = awful.util.table.join(
 
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
-    awful.button({ }, 1, function (c)
+    awful.button({ }, 1, 
+                 function (c)
                      if c == client.focus then
                          c.minimized = true
                      else
@@ -155,15 +155,18 @@ mytasklist.buttons = awful.util.table.join(
                          client.focus = c
                          c:raise()
                      end
-                         end),
-    awful.button({ }, 3, function ()
+                 end
+                ),
+    awful.button({ }, 3, 
+                 function (c)
                      if instance then
                          instance:hide()
                          instance = nil
                      else
-                         instance = awful.menu.clients({ width=250 })
+                         instance = awful.menu.clients( { theme = {width = 300, height = 30} } )
                      end
-                         end))
+                 end
+                ) )
 
 
 -- ******************
@@ -194,23 +197,40 @@ for s = 1, screen.count() do
     
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })    
-    myTaskBar[s] = awful.wibox({ position = "bottom", screen = s })
     
-
+    
+    -- Widgets that are aligned to the middle
+    local middle_layout = wibox.layout.fixed.horizontal()
+    middle_layout:add(mytasklist[s])
+    
+    
     -- Widgets that are aligned to the left
-    local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(mypromptbox[s])
-    left_layout:add(myLauncher)
-    -- left_layout:add(mylayoutbox[s])    
-    left_layout:add(mytaglist[s])
-
+    left_layoutPrompt = wibox.layout.fixed.horizontal()
+    left_layoutLaunch = wibox.layout.fixed.horizontal()
+    left_layoutTags = wibox.layout.fixed.horizontal()
+    
+    left_layoutPrompt:add(mypromptbox[s])
+    left_layoutLaunch:add(myLauncher)
+    left_layoutTags:add(mytaglist[s])
+    
+    
+    left_layout = wibox.layout.fixed.horizontal()
+    -- left_layout:add(mypromptbox[s])
+    -- left_layout:add(myLauncher)
+    -- left_layout:add(mytaglist[s])
+    
+    left_layout:add(left_layoutPrompt)
+    left_layout:add(left_layoutLaunch)
+    left_layout:add(left_layoutTags)
+    
     
     
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-
+    
     -- right_layout:add(myCuteImage)
+    right_layout:add(usbDev)
     right_layout:add(arrEnd)
     right_layout:add(myBrightnessImage)
     right_layout:add(arr3)
@@ -223,17 +243,18 @@ for s = 1, screen.count() do
     right_layout:add(arr0)
     right_layout:add(myTextClockImage)
     right_layout:add(myTextClock)
-
-    -- right_layout:add(myLauncher)
+    
     right_layout:add(mylayoutbox[s])        
     
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
+    -- layout:set_left(left_layoutPrompt)
+    -- layout:set_left(left_layoutLaunch)
+    -- layout:set_left(left_layoutTags)
+
+    layout:set_middle(middle_layout)
     layout:set_right(right_layout)
     
     mywibox[s]:set_widget(layout)
-    myTaskBar[s]:set_widget(mytasklist[s])
 end
-
-

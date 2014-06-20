@@ -14,7 +14,8 @@
 -- 
 -- Purpose:
 -- 	
---     Returns the functions needed for screen brightness and volume keyboard keys to change the panel widgets.
+--     Returns the functions needed for screen brightness and volume keyboard 
+--     keys to change the panel widgets.
 -- 
 -- 
 -- Keywords:
@@ -64,6 +65,7 @@
 -- **************
 
 local panelText = require("panelText")
+local panelVolume = require("panelVolume")
 
 
 
@@ -88,50 +90,64 @@ end
 bindFuncs = make_module('bindFuncs',
                           function(bindFuncs)
                               
-                              -- signals the brightness icon to change
-                              bindFuncs.signalBright = function(sig)
+                              -- Signals the brightness icon to change
+                              bindFuncs.signalBright = function()
+                                  
+                                  -- Kill old brightness notification
                                   naughty.destroy(brightMenu)
                                   
-                                  if sig == "up" then
-                                      awful.util.spawn("sudo /mnt/Linux/Share/scripts/system/BRIGHT up 100") 
-                                  elseif sig == "down" then
-                                      awful.util.spawn("sudo /mnt/Linux/Share/scripts/system/BRIGHT down 100") 
-                                  end
                                   
-                                  brightData = panelText.subGetScript(bright_cmd)
+                                  -- Display the notification
+                                  local brightData = panelText.subGetScript(brightStat_cmd)
                                   brightMenu = naughty.notify( { text = "Brightness: " .. brightData,
                                                                  font = "Inconsolata 10", 
                                                                  timeout = 1, hover_timeout = 0,
                                                                  width = 130,
-                                                                 height = 30,
+                                                                 height = 30
                                                                } )
                                   
-                                  panelBrightness.getIcon(myBrightnessImage, bright_cmd)
-
+                                  -- Change the icon
+                                  panelBrightness.getIcon(myBrightnessImage, nil, brightData)
                               end
-
                               
-                              -- signals the volume icon to change
+                              
+                              
+                              
+                              -- Signals the volume icon to change
                               bindFuncs.signalVolume = function(sig)
+                                  
+                                  -- Kill old volume notification
                                   naughty.destroy(volMenu)
                                   
+                                  -- Notification bubble width
                                   wide = 110
-                                  volData = panelText.subGetScript(vol_cmd)
                                   
+                                  -- Get volume data
+                                  local volData = panelText.subGetScript(vol_cmd)
+                                  
+                                  
+                                  -- Change the volume
                                   if sig == "up" then
                                       awful.util.spawn("amixer -c 0 set Master 5+ unmute") 
+                                      volData = panelText.subGetScript(vol_cmd)
+                                                                            
                                   elseif sig == "down" then
                                       awful.util.spawn("amixer -c 0 set Master 5- unmute") 
+                                      volData = panelText.subGetScript(vol_cmd)
+                                                                            
                                   elseif sig == "mute" then
                                       awful.util.spawn("amixer -c 0 set Master toggle") 
-
-                                      if muteTest ~= "mute" then 
+                                      volData = panelText.subGetScript(vol_cmd)
+                                      local muteTest = muteStat()
+                                      
+                                      if muteTest == "mute" then 
                                           volData = volData:gsub('%%', '%%  (Muted)')
-                                          wide = 160
+                                          wide = 170
                                       end
                                   end
                                   
                                   
+                                  -- Display the notification
                                   volMenu = naughty.notify( { text = "Volume: " .. volData, 
                                                               font = "Inconsolata 10", 
                                                               timeout = 1, hover_timeout = 0,
@@ -140,6 +156,7 @@ bindFuncs = make_module('bindFuncs',
                                                             } )
                                   
                                   
+                                  -- Change the icon
                                   panelVolume.getIcon(myVolumeImage, vol_cmd)
                               end
                               

@@ -73,7 +73,7 @@ end
 panelText = make_module('panelText',
                         function(panelText)
                             
-                            -- enables the ability to pipe commands
+                            -- Enables the ability to pipe commands
                             panelText.pipe = function(cmd, raw)
                                 local f = assert(io.popen(cmd, 'r'))
                                 local s = assert(f:read('*a'))
@@ -90,7 +90,7 @@ panelText = make_module('panelText',
                             
                                                         
                             
-                            -- sets the text, from a piped command, onto the panel
+                            -- Sets the text from a piped command onto the panel
                             panelText.getPipeScript = function(panel, stuff, color)
                                 panel:set_markup('<span font="Inconsolata 10" color="#EEEEEE">' ..
                                                  stuff ..
@@ -99,7 +99,7 @@ panelText = make_module('panelText',
                             
                             
                             
-                            -- returns the output from a piped command as a string
+                            -- Returns the output from a piped command as a string
                             panelText.subGetPipeScript = function(command)
                                 local output = ""
                                 local cmdPipe = (command):gsub('$output', output)
@@ -110,7 +110,7 @@ panelText = make_module('panelText',
                             
                                                         
                             
-                            -- get output from custom script (returns a panel)
+                            -- Get output from custom script (returns a panel)
                             panelText.getScript = function(panel, command, color)
                                 local comOutput =  io.popen(command)
                                 local comData = comOutput:read("*all")
@@ -123,7 +123,7 @@ panelText = make_module('panelText',
                             
                             
                             
-                            -- get output from custom script (returns a string)
+                            -- Get output from custom script (returns a string)
                             panelText.subGetScript = function(command)
                                 local comOutput = io.popen(command)
                                 local comData = comOutput:read("*all")

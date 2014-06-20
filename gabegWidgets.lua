@@ -42,7 +42,6 @@
 --     panelBattery    - custom module, returns battery widget (image and text)
 --     panelWireless   - custom module, returns wifi widget (image and text)
 --     panelVolume     - custom module, returns volume widget (image and text)
---     panelTimer      - custom module, refreshes widgets with updated values
 --     panelBrightness - custom module, returns brightness widget (image and text)
 --     panelMusic      - custom module, returns music widget (image and text)
 --
@@ -50,7 +49,6 @@
 --  File Structure:
 --
 --     * Edit Package Path
---     * Define Necessary Variables
 --     * Import Modules
 --     * Compile All The Modules
 -- 
@@ -71,19 +69,6 @@
 
 package.path = package.path .. ';/home/gabeg/.config/awesome/widget-library/?.lua'
 
-
-
--- **************************
--- DEFINE NECESSARY VARIABLES
--- **************************
-
--- script that prints out current computer info
-bat_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh bat"
-net_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh net"
-vol_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh vol stat"
-
--- initialize counter to display 10min warning
-counter = 0
 
 
 -- **************
@@ -118,12 +103,16 @@ end
 gabegWidgets = make_module('gabegWidgets',
                            function(gabegWidgets)
                                
+                               -- Awesome layout and wallpaper
                                gabegWidgets.wallpaper = panelLayouts.wallpaper
                                gabegWidgets.layouts = panelLayouts.layouts
                                
+                               -- Awesome system menu and clock
                                gabegWidgets.aweMenu = panelMenu.aweMenu
+                               gabegWidgets.resetAweMenu = panelMenu.resetAweMenu
                                gabegWidgets.clock = panelClock.clock
                                
+                               -- Various widgets for Awesome bar
                                gabegWidgets.battery = panelBattery.battery
                                gabegWidgets.wireless = panelWireless.wireless
                                gabegWidgets.volume = panelVolume.volume
@@ -132,38 +121,17 @@ gabegWidgets = make_module('gabegWidgets',
                                
                                gabegWidgets.cute = panelCute.cute
                                
-                               -- enabling the timer to refresh widgets
+                               
+                               -- Enable timer to refresh widgets
                                gabegWidgets.setTimer = function(myBatteryImage, myBatteryTextBox, myWirelessImage, myVolumeImage, secs)
                                    mytimer = timer({ timeout = secs })
                                    mytimer:connect_signal("timeout", 
                                                           function()
-                                                              -- refresh panel stats
                                                               panelBattery.warning()
                                                               panelBattery.getIcon(myBatteryImage, bat_cmd)
                                                               panelText.getScript(myBatteryTextBox, bat_cmd, "#333333")
                                                               panelWireless.getIcon(myWirelessImage, net_cmd)
-                                                              panelVolume.getIcon(myVolumeImage, vol_cmd)
-                                                              
-                                                              -- increment/reset counter
-                                                              counter = counter + 1
-                                                              
-                                                              if counter == 10 then
-                                                                  naughty.notify( 
-                                                                      { 
-                                                                          preset = naughty.config.presets.critical,
-                                                                          title = "Reminder",
-                                                                          text = " 10 min",
-                                                                          font = "Inconsolata 14", 
-                                                                          position = "bottom_right", 
-                                                                          timeout = 10, hover_timeout = 0,
-                                                                          width = 90, 
-                                                                          height = 60
-                                                                      }
-                                                                                )
-                                                                  
-                                                                  counter = 0
-                                                              end
-                                                              
+                                                              -- panelVolume.getIcon(myVolumeImage, vol_cmd)
                                                           end
                                                          )
                                    mytimer:start()
@@ -172,4 +140,3 @@ gabegWidgets = make_module('gabegWidgets',
                            end
                            
                           )
-

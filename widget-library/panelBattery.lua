@@ -89,19 +89,6 @@ local bat90 = "/home/gabeg/.config/awesome/icons/bat/bat90-99.png"
 local bat100 = "/home/gabeg/.config/awesome/icons/bat/bat100.png"
 
 
--- scripts that print out various computer information
-stat_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh bat stat"
-bat_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh bat"
-cpu_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh cpu"
-mem_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh mem"
-temp_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh temp"
-uptime_cmd = "/mnt/Linux/Share/scripts/compInfo-Arch.sh up"
-
-
--- system actions
-local shuttingDown = "sudo shutdown -P now"
-
-
 
 -- *****************
 -- DEFINE THE MODULE
@@ -124,9 +111,9 @@ end
 panelBattery = make_module('panelBattery',
                            function(panelBattery)
 
-                               -- displays a warning if battery charge is too low
+                               -- Display warning if battery charge is too low
                                panelBattery.warning = function()
-                                   local status = panelText.subGetScript(stat_cmd)
+                                   local status = panelText.subGetScript(batStat_cmd)
                                    local subStatus = string.sub(status, 0, 1)
                                    
                                    local percent = panelText.subGetScript(bat_cmd)
@@ -140,18 +127,18 @@ panelBattery = make_module('panelBattery',
                                    end
                                    
                                    
-                                   -- shut down computer
-                                   if subPercent <= 20 and subStatus ~= "C" then
+                                   -- Shut down computer when charge less than 10%
+                                   if subPercent <= 10 and subStatus ~= "C" then
                                        os.execute(shuttingDown)
                                    end
                                    
 
-                                   -- displays the warning
-                                   if subPercent < 30 and subStatus ~= "C" then
+                                   -- Display warning when charge less than 20%
+                                   if subPercent < 20 and subStatus ~= "C" then
                                        naughty.notify( {
                                                            preset = naughty.config.presets.critical, 
-                                                           text = "Arch Linux will shutdown at 20%.",
                                                            title = "SYSTEM ALERT",
+                                                           text = "Arch Linux will shutdown at 10%.",
                                                            position = "top_right",
                                                            font = "Inconsolata 10",
                                                            timeout = 15, hover_timeout = 0,
@@ -164,19 +151,22 @@ panelBattery = make_module('panelBattery',
                                
                                
                                
-                               -- sets the icon for the battery widget
+                               -- Set icon for battery widget
                                panelBattery.getIcon = function(panel, command)
-                                   local status = panelText.subGetScript(stat_cmd)
+                                   local status = panelText.subGetScript(batStat_cmd)
                                    local subStatus = string.sub(status, 0, 1)
                                    
                                    local percent = panelText.subGetScript(bat_cmd)
                                    local subPercent = percent:gsub('%%','')
+                                   local icon = nil
                                    
-
+                                   
+                                   -- Check if battery is charging
                                    if subStatus == "C" then 
                                        icon = batChargeIcon
                                    else
                                        
+                                       -- Else display the various charge level icons
                                        subPercent = subPercent + 0
                                        
                                        if subPercent > 0 and subPercent < 15 then
@@ -204,71 +194,115 @@ panelBattery = make_module('panelBattery',
                                
                                                               
                                
-                               -- makes the battery widget hoverable (displays computer info)
+                               -- Make battery widget display computer info on mouse hover
                                panelBattery.hover = function(myBattery, myBatteryImage)
+                                   
+                                   -- Kill old battery notification 
                                    naughty.destroy(batMenu)
                                    
-                                   -- script output to display in battery menu
-                                   upData = panelText.subGetScript(uptime_cmd)
-                                   tempData = panelText.subGetScript(temp_cmd)
-                                   cpuData = panelText.subGetScript(cpu_cmd)
-                                   memData = panelText.subGetScript(mem_cmd)
+                                   -- Script output information for notification
+                                   local upData = panelText.subGetScript(uptime_cmd)
+                                   local tempData = panelText.subGetScript(temp_cmd)
+                                   local cpuData = panelText.subGetScript(cpu_cmd)
+                                   local memData = panelText.subGetScript(mem_cmd)
                                    
-                                   newline = "\n" .. "\n"
+                                   -- Notification spacing
+                                   local newline = "\n" .. "\n"
                                    
                                    
-                                   batMenu = naughty.notify( { text = 
-                                                               string.format('<span style="oblique" ' ..
-                                                                             'underline="low" ' ..
-                                                                             'weight="bold" ' ..
-                                                                             'font_desc="Inconsolata 9">%s</span>',
-                                                                             "      System Information      ") ..
-                                                                                           newline ..
-                                                                                           
-                                                                                           string.format('<span font_desc="%s">%s</span>', 
-                                                                                                         "Inconsolata 10", 
-                                                                                                         upData  .. tempData ..
-                                                                                                             "\n"  .. 
-                                                                                                             memData .. 
-                                                                                                             "\n" ..
-                                                                                                             cpuData  
-                                                                                                        ),
-                                                                                                         timeout = 0, hover_timeout = 0,
-                                                                                                         width = 227,
-                                                                                                         height = 180,
+                                   -- Notification title
+                                   local batTitle = string.format('' .. 
+                                                                  '<span style="oblique" ' ..
+                                                                  'underline="low" ' ..
+                                                                  'weight="bold" ' ..
+                                                                  'font_desc="Inconsolata 9">%s</span>',
+                                                                  "      System Information      "
+                                                                 )
+                                   
+                                   -- Notification data
+                                   local batData = string.format('' ..
+                                                                 '<span font_desc="Inconsolata 10">%s</span>', 
+                                                                 upData  .. tempData ..
+                                                                     "\n"  .. 
+                                                                     memData .. 
+                                                                     "\n" ..
+                                                                     cpuData  
+                                                                )
+                                   
+                                   
+                                   -- The Battery notification
+                                   batMenu = naughty.notify( { text = batTitle .. newline .. batData,
+                                                               timeout = 0, hover_timeout = 0,
+                                                               width = 227,
+                                                               height = 180,
                                                              } )
+
                                    
+                                   -- Set battery image/text box buttons
                                    myBattery:buttons( awful.util.table.join(
-                                                          awful.button({ }, 4, function() panelBattery.hover(myBattery, myBatteryImage) end), 
-                                                          awful.button({ }, 5, function() panelBattery.hover(myBattery, myBatteryImage) end) ) 
+                                                          awful.button({ }, 1, 
+                                                                       function() 
+                                                                           panelBattery.hover(myBattery, myBatteryImage) 
+                                                                       end
+                                                                      ) ) 
                                                     ) 
-
+                                   
                                    myBatteryImage:buttons( awful.util.table.join(
-                                                          awful.button({ }, 4, function() panelBattery.hover(myBattery, myBatteryImage) end),
-                                                          awful.button({ }, 5, function() panelBattery.hover(myBattery, myBatteryImage) end) ) 
+                                                               awful.button({ }, 1, function() panelBattery.hover(myBattery, myBatteryImage) end) )
                                                          ) 
-
+                                   
                                end
                                
                                
                                
-                               -- returns the battery widget (image and text)
+                               -- Return battery widget (image and text)
                                panelBattery.battery = function()
+                                   
+                                   -- Display battery warning if charge too low
                                    panelBattery.warning()
                                    
+                                   -- Initialize battery image/text boxes
                                    myBatteryImage = wibox.widget.imagebox()
                                    myBatteryTextBox = wibox.widget.textbox()
                                    
+                                   -- Set widget icon and text
                                    panelBattery.getIcon(myBatteryImage, bat_cmd)
                                    panelText.getScript(myBatteryTextBox, bat_cmd, "#333333")
                                    
                                    
-                                   myBatteryTextBox:connect_signal("mouse::enter", function() panelBattery.hover(myBatteryTextBox, myBatteryImage) end)
-                                   myBatteryTextBox:connect_signal("mouse::leave", function() naughty.destroy(batMenu) end)
-
-                                   myBatteryImage:connect_signal("mouse::enter", function() panelBattery.hover(myBatteryTextBox, myBatteryImage) end)
-                                   myBatteryImage:connect_signal("mouse::leave", function() naughty.destroy(batMenu) end)
+                                   -- Battery textbox mouse mover event
+                                   myBatteryTextBox:connect_signal("mouse::enter", 
+                                                                   function() 
+                                                                       panelBattery.getIcon(myBatteryImage, bat_cmd)
+                                                                       panelText.getScript(myBatteryTextBox, bat_cmd, "#333333")
+                                                                       panelBattery.hover(myBatteryTextBox, myBatteryImage) 
+                                                                   end
+                                                                  )
                                    
+                                   myBatteryTextBox:connect_signal("mouse::leave", 
+                                                                   function() 
+                                                                       naughty.destroy(batMenu) 
+                                                                   end
+                                                                  )
+                                   
+                                   
+                                   -- Battery imagebox mouse hover event
+                                   myBatteryImage:connect_signal("mouse::enter", 
+                                                                 function() 
+                                                                     panelBattery.getIcon(myBatteryImage, bat_cmd)
+                                                                     panelText.getScript(myBatteryTextBox, bat_cmd, "#333333")
+                                                                     panelBattery.hover(myBatteryTextBox, myBatteryImage) 
+                                                                 end
+                                                                )
+                                   
+                                   myBatteryImage:connect_signal("mouse::leave", 
+                                                                 function() 
+                                                                     naughty.destroy(batMenu) 
+                                                                 end
+                                                                )
+                                   
+                                   
+                                   -- Return the image/text boxes
                                    return myBatteryImage, myBatteryTextBox
                                end
                                

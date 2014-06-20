@@ -58,6 +58,7 @@
 
 local bindFuncs = require("bindFuncs")
 local keydoc = require("keydoc")
+local panelText = require("panelText")
 
 
 
@@ -68,9 +69,6 @@ local keydoc = require("keydoc")
 -- define mod key
 modkey = "Mod4"
 
--- make the taskbar initially invisible (Hit "Modkey + t" to make it visible)
-myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
-
 
 
 -- **************
@@ -79,7 +77,7 @@ myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
 
 -- Mouse bindings
 root.buttons(awful.util.table.join(
-                 awful.button({ }, 1, function () myMainMenu:hide() end), 
+                 awful.button({ }, 1, function () myMainMenu:hide(); myMusicMenu:hide() end), 
                  awful.button({ }, 3, function () myMainMenu:toggle() end)
                                   )
             )
@@ -100,8 +98,18 @@ globalkeys = awful.util.table.join(
     -- -----------
     
     -- brightness keys
-    awful.key({ }, "XF86MonBrightnessUp", function() bindFuncs.signalBright("up") end),
-    awful.key({ }, "XF86MonBrightnessDown", function () bindFuncs.signalBright("down") end),
+    awful.key({ }, "XF86MonBrightnessUp", 
+              function() 
+                  os.execute(upBright_cmd .. " " .. "5") 
+                  bindFuncs.signalBright() 
+              end
+             ),
+    awful.key({ }, "XF86MonBrightnessDown", 
+              function ()
+                  os.execute(downBright_cmd .. " " .. "5") 
+                  bindFuncs.signalBright() 
+              end
+             ),
 
 
     -- Sound Keys
@@ -146,16 +154,7 @@ globalkeys = awful.util.table.join(
     
     awful.key({ modkey, "Shift"   }, "space", 
               function () awful.layout.inc(layouts, -1) end,
-              "Change to the previous layout algorithm"),
-    
-
-    -- Toggle Panel Visibility
-    awful.key({ modkey }, "t", 
-              function ()
-                  myTaskBar[mouse.screen].visible = not myTaskBar[mouse.screen].visible
-              end,
-             "Toggel 'Tasklist Panel' visibility"),    
-    
+              "Change to the previous layout algorithm"),    
     
     
     
@@ -204,10 +203,10 @@ globalkeys = awful.util.table.join(
     
     -- Change length of window
     awful.key({ modkey,           }, "l", 
-              function () awful.tag.incmwfact( 0.05)    end,
+              function () awful.tag.incmwfact( 0.01)    end,
               "Increase master window length"),
     awful.key({ modkey, "Shift"   }, "l", 
-              function () awful.tag.incmwfact(-0.05)    end,
+              function () awful.tag.incmwfact(-0.01)    end,
               "Decrease master window length"),
     
     
@@ -216,6 +215,9 @@ globalkeys = awful.util.table.join(
               awful.client.restore,
               "Restore minimized window"),
     
+    
+    -- Switch to a specific layout
+       awful.key({ modkey }, "w", function () awful.layout.set(awful.layout.suit.tile) end),
     
     
     -- ------------------------------
@@ -226,7 +228,9 @@ globalkeys = awful.util.table.join(
     
     -- Open Terminal
     awful.key({ modkey,           }, "Return", 
-              function () awful.util.spawn(terminal) end,
+              function () 
+                  awful.util.spawn(terminal)
+              end,
              "Open terminal"),
 
     
@@ -244,7 +248,25 @@ globalkeys = awful.util.table.join(
     
     awful.key({ modkey,           }, "Right", 
               awful.tag.viewnext, "Switch to the workspace on the right"),
+
+    awful.key({ modkey,           }, "Up", 
+              function()
+                  awful.tag.viewidx(2)
+              end, 
+              "Switch to the workspace on the left (twice)"),
     
+    awful.key({ modkey,           }, "Down",
+              function()
+                  awful.tag.viewidx(-2)
+              end,
+              "Switch to the workspace on the right (twice)"),
+    
+    
+    -- Run Firefox
+    awful.key({ modkey,           },  "f", 
+              function() awful.util.spawn("nice -n 10 " .. "  " .. browser) end,
+              "Run firefox browser with low priority"),
+
     
     -- Prompt (run: PROGRAM)
     awful.key({ modkey },  "r",  
@@ -262,10 +284,10 @@ globalkeys = awful.util.table.join(
 
 -- Make window Fullscreen AND Kill Focused Process
 clientkeys = awful.util.table.join(
-     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
+    awful.key({ modkey, "Shift"   }, "f",  function (c) c.fullscreen = not c.fullscreen  end),
+    awful.key({ modkey,           }, "q",  function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "f",  awful.client.floating.toggle                     ),
-    awful.key({ modkey, "Shift"   }, "m",      function (c) c.minimized = true               end),
+    awful.key({ modkey, "Shift"   }, "m",  function (c) c.minimized = true               end),
     awful.key({ modkey,           }, "u",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
@@ -295,7 +317,7 @@ for i = 1, 9 do
                                                  end
                                                 ),
                                        
-                                       awful.key({ modkey, "Control" }, "#" .. i + 9,
+                                       awful.key({ modkey, "Shift" }, "#" .. i + 9,
                                                  function ()
                                                      if client.focus then
                                                          local tag = awful.tag.gettags(client.focus.screen)[i]
@@ -337,7 +359,9 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    
     { rule = { }, properties = { }, callback = awful.client.setslave },
+    
     -- Set Firefox to always map on tag number 1 of screen 3.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
