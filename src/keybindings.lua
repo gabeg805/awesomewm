@@ -118,21 +118,18 @@ globalkeys = awful.util.table.join(
               function() 
                   awful.util.spawn("amixer -c 0 set Master toggle") 
                   disp_volMenu(1, 0)
-                  disp_musicMenu(1, 0)
                   setVolIcon(myVolumeLauncher)
               end),
     awful.key({ }, "XF86AudioRaiseVolume", 
               function() 
                   awful.util.spawn("amixer -c 0 set Master 5+ unmute") 
                   disp_volMenu(1, 0)
-                  disp_musicMenu(1, 0)
                   setVolIcon(myVolumeLauncher)
               end),
     awful.key({ }, "XF86AudioLowerVolume", 
               function()
                   awful.util.spawn("amixer -c 0 set Master 5- unmute") 
                   disp_volMenu(1, 0)
-                  disp_musicMenu(1, 0)
                   setVolIcon(myVolumeLauncher)
               end),
     

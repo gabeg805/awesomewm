@@ -130,11 +130,15 @@ function wifiHover(myWifiImage)
     local ssidData = doCommand(ssid_cmd)
     
     
+    -- Compile all the data together
+    local wifiDispData = string.format('<span font_desc="Inconsolata 9">%s</span>', 
+                                      ssidData .. "\nStrength: " .. netData
+                                     )
+
     -- Display Wifi notification
-    wireMenu = naughty.notify( { text = ssidData .. "\nStrength: " .. netData,
-                                 font = "Inconsolata 10", 
-                                 timeout = 0, hover_timeout = 0,
-                                 height = 45
+    wireMenu = naughty.notify( { text = wifiDispData,
+                                 font = "Inconsolata 9", 
+                                 timeout = 0, hover_timeout = 0
                                } )
     
     

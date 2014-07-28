@@ -29,7 +29,6 @@
 --     getSong        - returns the song title and artist
 --     getVolIcon     - returns icon path
 --     setVolIcon     - set the volume widget icon
---     disp_musicMenu - enables the music popup
 --     disp_volMenu   - enables the volume popup
 --     volHover       - makes the volume widget hoverable
 --     add_volMenu    - displays the hover-enabled popup
@@ -38,7 +37,6 @@
 -- 
 -- File Structure:
 --
---     * Import Modules 
 --     * Status Functions
 --     * Retrieval Functions
 --     * Set Volume Icon
@@ -59,14 +57,6 @@
 --     gabeg Jul 26 2014 <> updating functions to make program easier to use
 --
 -- **********************************************************************************
-
-
-
--- **************
--- IMPORT MODULES
--- **************
-
-require("commandline")
 
 
 -- ----------------------------
@@ -128,22 +118,16 @@ end
 -- Return the entire song name (title and artist)
 function getSong()
     
-    -- Get music information from MOCP
-    local title_cmd = "mocp -i | grep -m 1 -E '^Title' | cut -f2 -d':' | sed 's/^[ \t]*//'"
-    local totalTime_cmd = "mocp -i | grep -m 1 TotalTime | cut -f2 -d' '"
-    local currTime_cmd = "mocp -i | grep -m 1 CurrentTime | cut -f2 -d' '"
-    
-    -- Title, total time, and current time of song
+    -- Get song title from MOCP
+    local title_cmd = "mocp -i | grep -m 1 -E '^SongTitle' | cut -f2 -d':' | sed 's/^[ \t]*//'"
     local title = doCommand(title_cmd)
-    local totalTime = doCommand(totalTime_cmd)
-    local currTime = doCommand(currTime_cmd)
-        
+    
     -- Piece it together
-    local output = title .. "   " .. currTime .. "/" .. totalTime .. "  " 
-    local outputBare = "   /  "
+    local output = title
+    local outputBare = ''
     
     -- Check song output
-    if title == nil or currTime == nil or totalTime == nil or output == outputBare then 
+    if title == nil or output == outputBare then 
         return nil
     end
     
@@ -188,6 +172,8 @@ function getVolIcon()
     
     -- Check if music is running
     if musicTest == "music" then
+   
+        -- Display music icons
         if muteTest == "mute" or subPercent == 0 then
             icon = volMusMute
         elseif subPercent > 0 and subPercent < 20 then
@@ -240,79 +226,52 @@ end
 -- ----- MENU DISPLAY FUNCTIONS -----
 -- ----------------------------------
 
--- Display all the music information as a popup
-function disp_musicMenu(timeout, hover_timeout)
-    
-    -- Check for running process of MOCP
-    local mocpRun = doCommand("pgrep -c mocp") + 0
-    
-    -- Kill menu if open
-    if songMenu ~= nil then naughty.destroy(songMenu) end 
-    
-    -- Display music noficiation if music is playing
-    if mocpRun > 0 then
-        naughty.destroy(songMenu)
-        
-        song = getSong()
-        
-        if song == nil then 
-            os.execute("pkill mocp")
-            naughty.destroy(songMenu)
-        else
-            
-            -- Define notification timeout if not set
-            if timeout == nil then timeout = 0 end
-            if hover_timeout == nil then hover_timeout = 0 end
-            
-            songMenu = naughty.notify( { text = song,
-                                         font = "Inconsolata 10",
-                                         position = "bottom_right",
-                                         timeout = timeout, hover_timeout = hover_timeout
-                                       } )
-        end
-    end
-end
-
-
-
 -- Displays the volume notification
 function disp_volMenu(timeout, hover_timeout)
     
     -- Volume commands
     local mainDir = "/mnt/Linux/Share/scripts/"    
     local vol_cmd = mainDir .. "comp vol stat"
-    local chVol_cmd = mainDir .. "comp vol"
     
     
     -- Define notification timeout if not set
     if timeout == nil then timeout = 0 end
     if hover_timeout == nil then hover_timeout = 0 end
     
+    -- Check for running process of MOCP
+    local mocpRun = doCommand("pgrep -c mocp") + 0
+
     
     -- Kill old notification bubbles
     naughty.destroy(volMenu)
-    
-    -- Notification width
-    wide = 110
     
     -- Notification volume data
     local volData = doCommand(vol_cmd)
     
     -- Mute test
     local muteTest = muteStat()
+    if muteTest == "mute" then volData = volData:gsub('%%', '%%  (Muted)') end
     
-    if muteTest == "mute" then 
-        volData = volData:gsub('%%', '%%  (Muted)')
-        wide = 170
+    
+    -- Display music noficiation if music is playing
+    if mocpRun > 0 then
+        song = getSong()
+        
+        if song == nil then 
+            os.execute("pkill mocp")
+            musicData = ''
+        else
+            musicData = "\nPlaying: " .. song
+        end
+    else
+        musicData = ''
     end
     
     
     -- Display the notification
-    volMenu = naughty.notify( { text = "Volume: " .. volData, 
-                                font = "Inconsolata 10", 
-                                timeout = timeout, hover_timeout = hover_timeout,
-                                width = wide,
-                                height = 30
+    volMenu = naughty.notify( { text = "Volume: " .. volData .. musicData,
+                                font = "Inconsolata 9", 
+                                timeout = timeout, hover_timeout = hover_timeout
                               } )
 end
 
@@ -333,8 +292,7 @@ function volHover(myVolumeLauncher, myMusicMenu)
     
     -- Display the volume and music notifications
     disp_volMenu()
-    disp_musicMenu()
-    
+    -- disp_musicMenu()
     
     -- Check volume menu status 
     local temp = doCommand(vol_cmd)
@@ -386,7 +344,7 @@ function volume()
                                     { "Replay Playlist",    musicReplay    },
                                     { "Exit Music Player",  musicExit     }
                                         }, 
-                                theme = { width = 300, height = 30 } 
+                                theme = { width = 150, height = 30 } 
                               } )
     
     

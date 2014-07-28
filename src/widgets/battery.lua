@@ -99,9 +99,7 @@ function batWarning()
                             text = "Arch Linux will shutdown at 10%.",
                             position = "top_right",
                             font = "Inconsolata 10",
-                            timeout = 15, hover_timeout = 0,
-                            height = 40,
-                            width = 250
+                            timeout = 15, hover_timeout = 0
                         } )
     end
 end
@@ -187,11 +185,6 @@ function disp_batMenu(timeout, hover_timeout)
     
     
     -- Compile all the data together
-    local batTitle = string.format('<span style="oblique" underline="low" ' ..
-                                   'weight="bold" font_desc="Inconsolata 9">%s</span>',
-                                   '      Battery Information      '
-                                  )
-
     local batDispData = string.format('<span font_desc="Inconsolata 9">%s</span>', 
                                       'Battery Status:  ' .. batStatData ..
                                           "\nBattery Charge:  " .. batData ..
@@ -199,7 +192,7 @@ function disp_batMenu(timeout, hover_timeout)
                                      )
     
     -- Display the battery notification
-    batMenu = naughty.notify( { text = batTitle .. "\n\n" .. batDispData,
+    batMenu = naughty.notify( { text = batDispData,
                                 timeout = 0, hover_timeout = 0
                               } )
     

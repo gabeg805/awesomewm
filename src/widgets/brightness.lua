@@ -165,10 +165,8 @@ function disp_brightMenu(timeout, hover_timeout)
     -- Display the notification
     local brightData = doCommand(brightStat_cmd)
     brightMenu = naughty.notify( { text = "Brightness: " .. brightData,
-                                   font = "Inconsolata 10",  
-                                   timeout = timeout, hover_timeout = hover_timeout,
-                                   width = 140,
-                                   height = 30
+                                   font = "Inconsolata 9",  
+                                   timeout = timeout, hover_timeout = hover_timeout
                                  } )
 end
 
