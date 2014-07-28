@@ -104,7 +104,6 @@ function setWifiIcon(panel)
         end
     end
     
-    icon = wireNone
     panel:set_image(icon)
 end
 
