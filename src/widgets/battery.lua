@@ -184,15 +184,11 @@ function disp_batMenu(timeout, hover_timeout)
     local batTimeData = doCommand(bat_time_cmd)
     
     
-    -- Compile all the data together
-    local batDispData = string.format('<span font_desc="Inconsolata 9">%s</span>', 
-                                      'Battery Status:  ' .. batStatData ..
-                                          "\nBattery Charge:  " .. batData ..
-                                          "\nTime Remaining:  "  .. batTimeData 
-                                     )
-    
     -- Display the battery notification
-    batMenu = naughty.notify( { text = batDispData,
+    batMenu = naughty.notify( { text = 'Battery Status:  ' .. batStatData .. 
+                                "\nBattery Charge:  " .. batData ..
+                                "\nTime Remaining:  "  .. batTimeData,
+                                font = 'Inconsolata 9',
                                 timeout = 0, hover_timeout = 0
                               } )
     
@@ -228,23 +224,13 @@ function disp_sysMenu(timeout, hover_timeout)
     local cpuData = doCommand(cpu_cmd)
     local memData = doCommand(mem_cmd)
     -- local tempData = doCommand(temp_cmd)
-        
-    
-    -- Compile all the data together
-    local sysTitle = string.format('<span style="oblique" underline="low" ' ..
-                                   'weight="bold" font_desc="Inconsolata 9">%s</span>',
-                                   '      System Information      '
-                                  )
-    
-    local sysDispData = string.format('<span font_desc="Inconsolata 9">%s</span>', 
-                                  upData  .. 
-                                      "\n"  .. memData .. 
-                                      "\n\n" ..  cpuData  
-                                 )
     
     
     -- Display the system notification    
-    sysMenu = naughty.notify( { text = sysTitle .. "\n\n" .. sysDispData,
+    sysMenu = naughty.notify( { text = upData  .. 
+                                "\n"  .. memData .. 
+                                "\n\n" ..  cpuData,
+                                font = 'Inconsolata 9',
                                 timeout = 0, hover_timeout = 0
                               } )
     
@@ -296,8 +282,8 @@ function battery()
     
     
     -- Battery imagebox mouse hover event
-    myBatteryImage:connect_signal("mouse::enter", function() disp_batMenu() end)
-    myBatteryImage:connect_signal("mouse::leave", function() naughty.destroy(batMenu) end)
+    myBatteryImage:connect_signal("mouse::enter", function() batHover(myBatteryImage); disp_batMenu() end)
+    myBatteryImage:connect_signal("mouse::leave", function() naughty.destroy(batMenu); naughty.destroy(sysMenu) end)
     
     
     -- Return the image/text boxes
