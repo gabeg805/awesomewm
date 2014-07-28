@@ -81,7 +81,7 @@ function setWifiIcon(panel)
     local subPercent = percent:gsub('%%', '') 
     local subStatus = string.sub(percent, 0, 1)
     local icon = nil
-    -- 6c6c6c
+    
     
     -- Check for lack of wifi connection
     if subStatus == "S" then 
@@ -104,6 +104,7 @@ function setWifiIcon(panel)
         end
     end
     
+    icon = wireNone
     panel:set_image(icon)
 end
 
