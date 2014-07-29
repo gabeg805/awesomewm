@@ -65,7 +65,7 @@
 function batWarning()
 
     -- Battery commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local bat_cmd = mainDir .. "comp bat"
     local batStat_cmd = mainDir .. "comp bat stat"
     
@@ -114,7 +114,7 @@ end
 function setBatIcon(panel)
 
     -- Battery commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local bat_cmd = mainDir .. "comp bat"
     local batStat_cmd = mainDir .. "comp bat stat"
     
@@ -162,7 +162,7 @@ end
 function disp_batMenu(timeout, hover_timeout)
     
     -- Battery commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local bat_cmd = mainDir .. "comp bat"
     local bat_stat_cmd = mainDir .. "comp bat stat"
     local bat_time_cmd = "acpi -b | cut -f3 -d',' | cut -f2 -d' '"
@@ -202,7 +202,7 @@ end
 function disp_sysMenu(timeout, hover_timeout)
     
     -- System commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local uptime_cmd = mainDir .. "comp up"
     local cpu_cmd = mainDir .. "comp cpu"
     local mem_cmd = mainDir .. "comp mem"

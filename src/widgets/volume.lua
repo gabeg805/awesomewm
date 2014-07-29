@@ -67,7 +67,7 @@
 function muteStat()
     
     -- Volume commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local volMuteStat_cmd = mainDir .. "comp vol muteStat"
     
     
@@ -93,7 +93,7 @@ end
 function musicStat()
     
     -- Volume commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local musicRunStat_cmd = "pgrep -c mocp"
     
     
@@ -140,7 +140,7 @@ end
 function getVolIcon()
     
     -- Volume commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local vol_cmd = mainDir .. "comp vol stat"
         
     
@@ -230,7 +230,7 @@ end
 function disp_volMenu(timeout, hover_timeout)
     
     -- Volume commands
-    local mainDir = "/mnt/Linux/Share/scripts/"    
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"    
     local vol_cmd = mainDir .. "comp vol stat"
     
     
@@ -285,7 +285,7 @@ end
 function volHover(myVolumeLauncher, myMusicMenu) 
     
     -- Volume commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local vol_cmd = mainDir .. "comp vol stat"
     local chVol_cmd = mainDir .. "comp vol"
     

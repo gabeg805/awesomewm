@@ -61,7 +61,7 @@
 function setBrightIcon(panel)
     
     -- Brightness commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local brightStat_cmd = mainDir .. "comp bright stat"
 
     
@@ -149,7 +149,7 @@ end
 function disp_brightMenu(timeout, hover_timeout)
     
     -- Brightness commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local brightStat_cmd = mainDir .. "comp bright stat"
         
     
@@ -180,7 +180,7 @@ end
 function brightHover(myBrightnessImage) 
     
     -- Brightness commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local upBright_cmd = mainDir .. "comp bright inc"
     local downBright_cmd = mainDir .. "comp bright dec"
     

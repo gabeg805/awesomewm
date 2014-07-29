@@ -84,8 +84,7 @@ globalkeys = awful.util.table.join(
               function() 
                   
                   -- Brightness commands
-                  local mainDir = "/mnt/Linux/Share/scripts/"
-                  local upBright_cmd = mainDir .. "comp bright inc"
+                  local upBright_cmd = "/home/gabeg/.config/awesome/other/scripts/comp bright inc"
                   
                   -- Change the brightness
                   os.execute(upBright_cmd .. " " .. "5") 
@@ -100,8 +99,7 @@ globalkeys = awful.util.table.join(
               function ()
 
                   -- Brightness commands
-                  local mainDir = "/mnt/Linux/Share/scripts/"
-                  local downBright_cmd = mainDir .. "comp bright dec"
+                  local downBright_cmd = "/home/gabeg/.config/awesome/other/scripts/comp bright dec"
                   
                   -- Change the brightness
                   os.execute(downBright_cmd .. " " .. "5") 

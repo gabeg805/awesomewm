@@ -62,7 +62,7 @@
 function setWifiIcon(panel)
     
     -- Wireless network commands
-    local mainDir = "/mnt/Linux/Share/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
     local net_cmd = mainDir .. "comp net"
     local ssid_cmd = mainDir .. "comp net ssid"
     
@@ -117,7 +117,7 @@ end
 function wifiHover(myWifiImage)
     
     -- Wireless network commands
-    local mainDir = "/mnt/Linux/Share/scripts/"    
+    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"    
     local net_cmd = mainDir .. "comp net"
     local ssid_cmd = mainDir .. "comp net ssid"
     
