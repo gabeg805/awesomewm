@@ -1,0 +1,359 @@
+#!/bin/bash
+## 
+## Created By: Gabriel Gonzalez
+## 
+## 
+## Name:
+##   
+##     bright
+## 
+## 
+## Syntax:
+##   
+##     bright [ -h ] [ VALUE ] [ --off ] [ --stat ] [ --inc VALUE ] [ --dec VALUE ]
+## 
+## 
+## Purpose:
+##   
+##     Change the brightness of the monitor, or turn it off entirely.
+## 
+## 
+## Keywords:
+##   
+##     VALUE  - a percentage value (1-100) to set/increment/decrement the brightness 
+## 
+##     -h     - prints the help screen
+##     --off  - turn off the monitor
+##     --stat - print the current brightness value as a percent
+##     --inc  - increment the brightness by a percentage VALUE
+##     --dec  - decrement the brightness by a percentage VALUE
+## 
+## 
+## Functions:
+##   
+##     helpScreen           - prints the help screen
+##     isInt                - check if value is a valid integer
+##     screenOff            - turn off the screen
+##     defaultBrightness    - set the default brightness
+##     getPercent           - get the current brightness as a percent
+##     convertPerToVal      - convert percent to brightness file value
+##     stepChangeBrightness - increment or decrement the current brightness
+##     changeBrightness     - change the current brightness
+##     main                 - the main function
+## 
+## 
+## File Structure:
+##   
+##     * All Functions
+##     * Print Functions
+##     * Test Functions
+##     * Action Functions
+##     * Main Function
+##     * Control Brightness
+##   
+##   
+## Modification History:
+##   
+##     gabeg Mar 02 2014 <> created
+## 
+##     gabeg Apr 26 2014 <> changed input parameters
+## 
+##     gabeg Jul 01 2014 <> added functions to increase readability
+##
+## **********************************************************************************
+
+
+
+## #########################
+## ##### ALL FUNCTIONS #####
+## #########################
+
+
+## ###############
+## PRINT FUNCTIONS
+## ###############
+
+## Displays the help screen
+function helpScreen {
+    
+    ## Get display screen ready
+    local file="$0"
+    local first=(`sed 's/^$/  /; s/^/\`/' "$file" | grep -o -E '^\`..'`)
+    local j=0
+    
+    for i in "${first[@]}"; do 
+        if [[ "$i" == '`##' || "$i" == '`#!' ]]; then :; else break; fi
+        j=$[ $j + 1 ]
+    done
+    
+    
+    ## Help Message    
+    head -"$j" "$file" 
+}
+
+
+
+## ##############
+## TEST FUNCTIONS
+## ##############
+
+## Check if input is Integer
+function isInt {
+    
+    ## User input
+    local input="$1"
+    
+    
+    ## Integer validity check
+    if [ "$input" -eq "$input" ] 2>/dev/null; then
+        if [ "$input" -ge 1 -a "$input" -le 100 ]; then
+            echo true
+        else
+            echo false
+        fi
+    else
+        echo false
+    fi
+}
+
+
+
+## ################
+## ACTION FUNCTIONS 
+## ################
+
+## Turn the screen off
+function screenOff {
+    xset dpms force off
+}
+
+
+
+## Set default brightness 
+function defaultBrightness {
+    
+    ## Main directory
+    local mainDir='/sys/class/power_supply/BAT0'
+    
+    ## Batter settings
+    local charge=`head -1 "$mainDir/status"`
+    
+    
+    ## Choose default value
+    if [[ "$charge" == "Discharging" ]]; then 
+        per=25
+    else 
+        per=50
+    fi
+    
+    
+    ## Return default percentage
+    echo $per
+}
+
+
+
+## Get percent brightness value
+function getPercent {
+    
+    ## Main directory
+    local mainDir='/sys/class/backlight/intel_backlight'
+    
+    ## Brightness file
+    local brightFile="$mainDir/brightness"
+    
+    ## Brightness Values
+    local curBright=`head -1 "$brightFile"`  
+    local maxBright=`head -1 "$mainDir/max_brightness"`
+    
+    
+    ## Calculate brightness percent
+    local precise=`echo "scale=2; $curBright / $maxBright * 100" | bc`
+    local rounded=`echo "$precise / 1" | bc`
+    
+    
+    ## Return brightness percent 
+    echo "$rounded"
+}
+
+
+
+## Converts percent to brightness value in standard Linux range (mine goes from 1-4882)
+function convertPerToVal {
+
+    ## Main directory
+    local mainDir='/sys/class/backlight/intel_backlight'
+    
+    ## Brightness file
+    local brightFile="$mainDir/brightness"
+    
+    ## Brightness Values
+    local maxBright=`head -1 "$mainDir/max_brightness"`
+    
+    
+    ## User input
+    local input="$1"
+    
+    ## Check if input is a valid integer
+    local intCheck=`isInt $input`
+    
+    
+    ## Convert percent to brightness value
+    if $intCheck; then
+        local precise=`echo "scale=2; $input * $maxBright / 100" | bc`
+        local rounded=`echo "$precise / 1" | bc`
+        
+        
+        ## Return converted percent value
+        echo $rounded
+    fi
+}
+
+
+
+## Increment or decrement the brightness by an amount
+function stepChangeBrightness {
+    
+    ## Main directory
+    local mainDir='/sys/class/backlight/intel_backlight'
+        
+    ## Brightness file
+    local brightFile="$mainDir/brightness"
+    
+    ## Brightness Values
+    local curBright=`head -1 "$brightFile"`  
+    
+    
+    ## User input
+    local input="$1"
+    
+    ## User step value
+    local step="$2"
+    
+    
+    ## Check if step value is a valid integer
+    local intCheck=`isInt $step`
+    
+    
+    ## Convert percent to brightness value
+    if $intCheck; then 
+        local val=`convertPerToVal $step`
+    else
+        echo "ERROR: An integer between 1 and 100 must be entered"
+        exit
+    fi
+    
+    
+    ## Calculate brightness change
+    if [[ "$input" == 'inc' ]]; then 
+        finalValue=$[ $curBright + $val ]
+    else      
+        finalValue=$[ $curBright - $val ]
+    fi
+    
+    
+    ## Change brightness
+    echo "$finalValue" > "$brightFile"
+}
+
+
+
+## Change the brightness
+function changeBrightness {
+
+    ## Main directory
+    local mainDir='/sys/class/backlight/intel_backlight'
+        
+    ## Brightness file
+    local brightFile="$mainDir/brightness"
+    
+    
+    ## User input
+    local per="$1"
+    
+    ## Convert input to brightness value
+    local val=`convertPerToVal $per`
+    
+    
+    ## Print changed brightness level
+    echo "Brightness: $per%"
+    
+    ## Change brightness
+    echo "$val" > "$brightFile"
+}
+
+
+
+## #############
+## MAIN FUNCTION
+## #############
+
+## Main function
+function main {
+    
+    ## Desired screen brightness value
+    local input="$1"
+    
+    
+    ## Input Parameters
+    case "$input" in
+        
+        ## Print the help screen
+        '-h')
+              helpScreen
+              exit
+              ;;
+        
+        
+        ## Set to default brightness value
+        '')
+            local per=`defaultBrightness`
+            changeBrightness "$per"
+            ;;
+        
+        
+        ## Turn Off Monitor 
+        'off')
+               screenOff
+               ;;
+        
+        
+        ## Print Current Screen Brightness
+        'stat')
+                local per=`getPercent`
+                echo "Brightness: $per%"
+                ;;
+        
+        
+        ## Increment/Decrement Screen Brightness
+        'inc'|'dec')
+                     local val="$2"
+                     stepChangeBrightness "$input" "$val"  
+                     ;;
+        
+        
+        *)
+            ## Check value input
+            local intCheck=`isInt "$input"`
+            
+            ## Change brightness
+            if $intCheck; then
+                changeBrightness "$input"
+            else
+                
+                ## Print Syntax Error
+                echo -e 'ERROR: Incorrect syntax used. See the following for correct syntax'"\n"
+                helpScreen
+                exit
+            fi
+            ;;
+    esac
+}
+
+
+
+## ##############################
+## ##### CONTROL BRIGHTNESS #####
+## ##############################
+
+main "$@"

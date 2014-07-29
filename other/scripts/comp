@@ -82,11 +82,25 @@
 ## DISPLAY REQUESTED COMPUTER INFORMATION
 ## **************************************
 
-## Show Help Screen
-if [[ "$1" == '-h' ]]; then
-    head -76 "$0" | less
-    exit
-fi
+## Displays the help screen
+function helpScreen {
+    
+    ## Get display screen ready
+    local file="$0"
+    local first=(`sed 's/^$/  /; s/^/\`/' "$file" | grep -o -E '^\`..'`)
+    local j=0
+    
+    for i in "${first[@]}"; do 
+        if [[ "$i" == '`##' || "$i" == '`#!' ]]; then :; else break; fi
+        j=$[ $j + 1 ]
+    done
+    
+    
+    ## Help Message    
+    head -"$j" "$file" 
+}
+
+
 
 ## Show Everything Else!
 case "$1" in
@@ -105,10 +119,9 @@ case "$1" in
                        exit
                        ;;
                *)
-                  synloc=`echo $0`
-                  syntax "$synloc" 10
-                  exit
-                  ;;
+                   helpScreen
+                   exit
+                   ;;
            esac
            
            currentCharge=`head -1 "$mainBatFile/charge_now"`
@@ -121,7 +134,7 @@ case "$1" in
 
 ## Brightness Settings
  "bright")
-           mainBrightDir='/mnt/Linux/Share/scripts/system'
+           mainBrightDir='/home/gabeg/.config/awesome/other/scripts'
            
            case "$2" in
                 'inc') 
@@ -145,10 +158,9 @@ case "$1" in
                        exit
                        ;;
                *)
-                  synloc=`echo $0`
-                  syntax "$synloc" 10
-                  exit
-                  ;;
+                   helpScreen
+                   exit
+                   ;;
            esac
            ;;
     
@@ -173,10 +185,9 @@ case "$1" in
                    echo "CPU 3: $cpu3Used%"
                    ;;
                *)
-                  synloc=`echo $0`
-                  syntax "$synloc" 10
-                  exit
-                  ;;
+                   helpScreen
+                   exit
+                   ;;
            esac
            ;;
     
@@ -195,10 +206,9 @@ case "$1" in
                    echo "Mem: $memUsed Mb / $memOverall Mb"
                    ;;
                *)
-                  synloc=`echo $0`
-                  syntax "$synloc" 10
-                  exit
-                  ;;
+                   helpScreen
+                   exit
+                   ;;
            esac           
            ;;
 
@@ -226,10 +236,9 @@ case "$1" in
                        exit
                        ;;
                *)
-                  synloc=`echo $0`
-                  syntax "$synloc" 10
-                  exit
-                  ;;
+                   helpScreen
+                   exit
+                   ;;
            esac
            ;;
 
@@ -262,10 +271,9 @@ case "$1" in
                   echo "Uptime: $runTime"
                   ;;
               *)
-                 synloc=`echo $0`
-                 syntax "$synloc" 10
-                 exit
-                 ;;
+                  helpScreen
+                  exit
+                  ;;
           esac
           ;;
     
@@ -302,11 +310,9 @@ case "$1" in
                   ;;
               
               *)
-                  synloc=`echo $0`
-                  syntax "$synloc" 10
+                  helpScreen
                   exit
                   ;;
           esac          
           ;;
 esac
-
