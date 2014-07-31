@@ -59,9 +59,8 @@ function aweMenu()
     local hibIcon = menuIconsDir .. "hibernate.png"
     local rebIcon = menuIconsDir .. "reboot.png"
     local shuIcon = menuIconsDir .. "shutdown.png"
-    local usbIcon = menuIconsDir .. "usb.png"
     
-
+    
     -- System Power commands 
     local pow = "/usr/bin/systemctl"
     local rebooting = pow .. " " .. "reboot"
