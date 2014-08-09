@@ -61,7 +61,7 @@ function disp_cal(val)
     
     local cal = awful.util.pread("cal -s " .. val)
     calendar = naughty.notify( { text = cal,
-                                 font = "Inconsolata 10",
+                                 font = "Inconsolata 9",
                                  position = "top_left",
                                  timeout = 0, hover_timeout = 0
                                } )

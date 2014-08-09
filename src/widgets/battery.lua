@@ -98,7 +98,7 @@ function batWarning()
                             title = "SYSTEM ALERT",
                             text = "Arch Linux will shutdown at 10%.",
                             position = "top_right",
-                            font = "Inconsolata 10",
+                            font = "Inconsolata 9",
                             timeout = 15, hover_timeout = 0
                         } )
     end
