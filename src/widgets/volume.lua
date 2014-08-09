@@ -1,28 +1,28 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     volume
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     require("volume")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Returns the volume widget so that the user can put it on the panel.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     muteStat       - check if mute is toggled
 --     musicStat      - check if MOCP (the music player) is running
@@ -35,7 +35,7 @@
 --     volume         - returns the volume widget 
 -- 
 -- 
--- File Structure:
+-- FILE STRUCTURE:
 --
 --     * Status Functions
 --     * Retrieval Functions
@@ -45,7 +45,7 @@
 --     * Create the Volume Widget
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 13 2014 <> created
 -- 
@@ -210,9 +210,9 @@ end
 
 
 
--- ---------------
--- SET VOLUME ICON
--- ---------------
+-- ---------------------------
+-- ----- SET VOLUME ICON -----
+-- ---------------------------
 
 -- Set the icon for the volume widget
 function setVolIcon(panel)

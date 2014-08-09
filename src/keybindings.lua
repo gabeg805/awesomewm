@@ -1,34 +1,35 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     keybindings
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     dofile("/PATH/TO/FILE/keybindings.lua")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Defines mouse and keybindings, and client rules.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     N/A
 -- 
 -- 
---  File Structure:
+--  FILE STRUCTURE:
 --
+--     * Define Mod Key
 --     * Mouse Bindings
 --     * Key Bindings
 --     * Client Keys
@@ -37,7 +38,7 @@
 --     * Client Signals
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 08 2014 <> created
 --
@@ -45,17 +46,17 @@
 
 
 -- --------------------------
--- DEFINE NECESSARY VARIABLES
+-- ----- DEFINE MOD KEY -----
 -- --------------------------
 
--- define mod key
+-- Define mod key
 modkey = "Mod4"
 
 
 
--- --------------
--- MOUSE BINDINGS
--- --------------
+-- --------------------------
+-- ----- MOUSE BINDINGS -----
+-- --------------------------
 
 -- Mouse bindings
 root.buttons(awful.util.table.join(
@@ -66,18 +67,17 @@ root.buttons(awful.util.table.join(
 
 
 
--- ------------
--- KEY BINDINGS
--- ------------
+-- ------------------------
+-- ----- KEY BINDINGS -----
+-- ------------------------
 
 -- Key bindings
 globalkeys = awful.util.table.join(
 
 
-
-    -- -----------
+    -- ***********
     -- SYSTEM KEYS
-    -- -----------
+    -- ***********
     
     -- Brightness keys
     awful.key({ }, "XF86MonBrightnessUp", 
@@ -146,9 +146,9 @@ globalkeys = awful.util.table.join(
     
     
     
-    -- -----------------------------
-    -- DOCUMENT LAYOUT MANIPULATIONS
-    -- -----------------------------
+    -- ********************
+    -- LAYOUT MANIPULATIONS
+    -- ********************
     
     -- Change layout algorithm
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
@@ -157,9 +157,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "t", function () mywiboxtasks[mouse.screen].visible = not mywiboxtasks[mouse.screen].visible end),
     
     
-    -- --------------------------
-    -- DOCUMENT WINDOW MANAGEMENT
-    -- --------------------------
+    -- *****************
+    -- WINDOW MANAGEMENT
+    -- *****************
     
     -- Client window location
     awful.key({ modkey, "Control" }, "j", function () awful.client.swap.byidx( 1) end),
@@ -199,9 +199,9 @@ globalkeys = awful.util.table.join(
     
     
     
-    -- ------------------------------
-    -- DOCUMENT AWESOME MAIN COMMANDS
-    -- ------------------------------
+    -- *********************
+    -- AWESOME MAIN COMMANDS
+    -- *********************
     
     -- Open Terminal
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
@@ -228,9 +228,9 @@ globalkeys = awful.util.table.join(
 
 
 
--- -----------
--- CLIENT KEYS
--- -----------
+-- -----------------------
+-- ----- CLIENT KEYS -----
+-- -----------------------
 
 -- Make window Fullscreen AND Kill Focused Process
 clientkeys = awful.util.table.join(
@@ -247,9 +247,9 @@ clientkeys = awful.util.table.join(
 
 
 
--- -----------------------
--- BIND WORKSPACES TO KEYS
--- -----------------------
+-- -----------------------------------
+-- ----- BIND WORKSPACES TO KEYS -----
+-- -----------------------------------
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
@@ -290,9 +290,9 @@ clientbuttons = awful.util.table.join(
 
 
 
--- ------------------
--- SET KEYS AND RULES
--- ------------------
+-- ------------------------------
+-- ----- SET KEYS AND RULES -----
+-- ------------------------------
 
 -- Set keys
 root.keys(globalkeys)
@@ -312,19 +312,13 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     
     { rule = { }, properties = { }, callback = awful.client.setslave },
-    
-    -- Set Firefox to always map on tag number 1 of screen 3.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
-    -- { rule = { class = "Qpdfview" },
-    --   properties = { tag = tags[1][4] } },
 }
 
 
 
--- --------------
--- CLIENT SIGNALS
--- --------------
+-- --------------------------
+-- ----- CLIENT SIGNALS -----
+-- --------------------------
 
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", 

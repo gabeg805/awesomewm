@@ -1,28 +1,28 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     wifi
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     require("wifi")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Returns the wifi widget so that the user can put it on the panel.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     setWifiIcon   - returns the correct wifi icon given the current wifi 
 --                     percentage value
@@ -33,14 +33,14 @@
 --     wifi          - returns the wifi widget
 -- 
 -- 
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Get Wifi Icon
 --     * Wifi Widget Mouse Hover
 --     * Create the Wifi Widget
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 13 2014 <> created
 -- 
@@ -54,9 +54,9 @@
 -- **********************************************************************************
 
 
--- -------------
--- GET WIFI ICON
--- -------------
+-- -------------------------
+-- ----- GET WIFI ICON -----
+-- -------------------------
 
 -- Set the icon for the wifi widget
 function setWifiIcon(panel)
@@ -109,9 +109,9 @@ end
 
 
 
--- -----------------------
--- WIFI WIDGET MOUSE HOVER
--- -----------------------
+-- -----------------------------------
+-- ----- WIFI WIDGET MOUSE HOVER -----
+-- -----------------------------------
 
 -- Make wifi widget hoverable (displays popup)
 function wifiHover(myWifiImage)
@@ -154,9 +154,9 @@ end
 
 
 
--- ----------------------
--- CREATE THE WIFI WIDGET
--- ----------------------
+-- ----------------------------------
+-- ----- CREATE THE WIFI WIDGET -----
+-- ----------------------------------
 
 -- Returns the wifi widget (image and text)
 function wifi()

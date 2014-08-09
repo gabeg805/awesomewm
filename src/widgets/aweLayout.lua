@@ -1,36 +1,36 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     aweLayout
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     require("aweLayout")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Gives the user the ability to set the wallpaper, layouts, and tags that the 
 --     Awesome WM uses.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     setWallpaper - set the wallpaper for each screen
 --     getLayouts   - return the Awesome layout tiling algorithms
 --     setTags      - sets the tags and layouts for each screen
 -- 
 -- 
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Set the Wallpaper
 --     * Awesome Tiling Layouts
@@ -39,7 +39,7 @@
 --     * Get the Tasklist
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 13 2014 <> created
 -- 
@@ -48,9 +48,9 @@
 -- **********************************************************************************
 
 
--- -----------------
--- SET THE WALLPAPER
--- -----------------
+-- -----------------------------
+-- ----- SET THE WALLPAPER -----
+-- -----------------------------
 
 -- Set the Awesome wallpaper
 function setWallpaper(wallpaper)
@@ -66,9 +66,9 @@ end
 
 
 
--- ----------------------
--- AWESOME TILING LAYOUTS
--- ----------------------
+-- ----------------------------------
+-- ----- AWESOME TILING LAYOUTS -----
+-- ----------------------------------
 
 -- Define Awesome tiling layouts (algorithms)
 function setLayouts()
@@ -83,9 +83,10 @@ function setLayouts()
 end
 
 
--- ------------
--- AWESOME TAGS
--- ------------
+
+-- ------------------------
+-- ----- AWESOME TAGS -----
+-- ------------------------
 
 -- Define Awesome tags
 function setTags(labels, layouts)
@@ -104,9 +105,9 @@ end
 
 
 
--- ---------------
--- GET THE TAGLIST
--- ---------------
+-- ---------------------------
+-- ----- GET THE TAGLIST -----
+-- ---------------------------
 
 -- Returns the taglist
 function getTagList() 
@@ -124,9 +125,9 @@ end
 
 
 
--- ---------------
--- GET THE TAGLIST
--- ---------------
+-- ---------------------------
+-- ----- GET THE TAGLIST -----
+-- ---------------------------
 
 -- Returns the tasklist
 function getTaskList()

@@ -1,28 +1,28 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)  
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)  
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     battery
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     require("battery")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Returns the battery widget so that the user can put it on the panel.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     batWarning   - displays a warning when battery charge is low
 --     setBatIcon   - returns the correct battery icon given the current battery 
@@ -34,7 +34,7 @@
 --     battery      - returns the battery widget (image and text)
 -- 
 -- 
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Battery Warning
 --     * Set Battery Icon 
@@ -43,7 +43,7 @@
 --     * Create the Battery Widget 
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 13 2014 <> created
 -- 
@@ -57,9 +57,9 @@
 -- ************************************************************************
 
 
--- ---------------
--- BATTERY WARNING
--- ---------------
+-- ---------------------------
+-- ----- BATTERY WARNING -----
+-- ---------------------------
 
 -- Display warning if battery charge is too low
 function batWarning()
@@ -106,9 +106,9 @@ end
 
 
 
--- ----------------
--- SET BATTERY ICON
--- ----------------
+-- ----------------------------
+-- ----- SET BATTERY ICON -----
+-- ----------------------------
 
 -- Set icon for battery widget
 function setBatIcon(panel)
@@ -154,9 +154,9 @@ end
 
 
 
--- ---------------------------------------
--- DISPLAY BATTERY AND SYSTEM NOTIFICATION
--- ---------------------------------------
+-- ---------------------------------------------------
+-- ----- DISPLAY BATTERY AND SYSTEM NOTIFICATION -----
+-- ---------------------------------------------------
 
 -- Displays the battery notification
 function disp_batMenu(timeout, hover_timeout)
@@ -241,9 +241,9 @@ end
 
 
 
--- ---------------------------------------
--- ENABLE BATTERY WIDGET MOUSE HOVER EVENT
--- ---------------------------------------
+-- ---------------------------------------------------
+-- ----- ENABLE BATTERY WIDGET MOUSE HOVER EVENT -----
+-- ---------------------------------------------------
 
 -- Make battery widget display computer info on mouse hover
 function batHover(myBatteryImage)
@@ -263,9 +263,9 @@ end
 
 
 
--- -------------------------
--- CREATE THE BATTERY WIDGET
--- -------------------------
+-- -------------------------------------
+-- ----- CREATE THE BATTERY WIDGET -----
+-- -------------------------------------
 
 -- Return battery widget (image and text)
 function battery()

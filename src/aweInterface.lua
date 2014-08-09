@@ -1,55 +1,40 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     aweInterface
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     dofile("/PATH/TO/FILE/aweInterface.lua")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Sets up customized Awesome panel, layout, background, etc.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     N/A
 -- 
 -- 
--- Dependencies:
---
---     gears     - Awesome builtin module
---     awful     - Awesome builtin module
---     wibox     - Awesome builtin module
---     beautiful - Awesome builtin module
---     naughty   - Awesome builtin module
---     menubar   - Awesome builtin module
--- 
---     gabegWidgets - custom module, adds widgets to panel
---   
---   
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Import Libraries
---     * Set the Awesome Layout
 --     * Define the Panel Widgets
---     * Define Panel Icons
---     * Initialize Panel Items
 --     * Complete The Panel
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 08 2014 <> created
 --
@@ -57,10 +42,9 @@
 
 
 
--- ****************
--- IMPORT LIBRARIES
--- ****************
-
+-- ----------------------------
+-- ----- IMPORT LIBRARIES -----
+-- ----------------------------
 
 require("aweMenu")
 require("clock")
@@ -70,9 +54,9 @@ require("volume")
 require("brightness")
 
 
--- ************************
--- DEFINE THE PANEL WIDGETS
--- ************************
+-- ------------------------------------
+-- ----- DEFINE THE PANEL WIDGETS -----
+-- ------------------------------------
 
 -- Create Awesome menu widget
 myLauncher = aweMenu()
@@ -100,9 +84,9 @@ mytimer:connect_signal("timeout",
 mytimer:start()
 
 
--- ******************
--- COMPLETE THE PANEL
--- ******************
+-- ------------------------------
+-- ----- COMPLETE THE PANEL -----
+-- ------------------------------
 
 mywibox = {}
 mywiboxtasks = {}

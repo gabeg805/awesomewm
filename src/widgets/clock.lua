@@ -1,28 +1,28 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)   
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)   
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     clock
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     require("clock")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Returns the clock widget so that the user can put it on the panel.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     disp_cal     - display the calendar as a popup
 --     add_calendar - displays the click-enabled calendar
@@ -30,14 +30,14 @@
 --     clock        - returns the clock widget 
 -- 
 -- 
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Display Clock Calendar
 --     * Enable Clock Widget Mouse Hover Event
 --     * Create the Text Clock
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 13 2014 <> created
 -- 
@@ -50,9 +50,9 @@
 -- **********************************************************************************
 
 
--- ----------------------
--- DISPLAY CLOCK CALENDAR
--- ----------------------
+-- ----------------------------------
+-- ----- DISPLAY CLOCK CALENDAR -----
+-- ----------------------------------
 
 -- Display the calendar
 function disp_cal(val)
@@ -69,9 +69,9 @@ end
 
 
 
--- -------------------------------------
--- ENABLE CLOCK WIDGET MOUSE HOVER EVENT
--- -------------------------------------
+-- -------------------------------------------------
+-- ----- ENABLE CLOCK WIDGET MOUSE HOVER EVENT -----
+-- -------------------------------------------------
 
 -- Enable hover mouse events 
 function clockHover(mytextclock)
@@ -104,9 +104,9 @@ end
 
 
 
--- ---------------------
--- CREATE THE TEXT CLOCK
--- ---------------------
+-- ---------------------------------
+-- ----- CREATE THE TEXT CLOCK -----
+-- ---------------------------------
 
 -- Returns the clock widget 
 function clock()

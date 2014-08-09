@@ -1,44 +1,38 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     error_check.lua
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     dofile("/PATH/TO/FILE/error_check.lua")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Checks for errors on compile.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     N/A
 -- 
 -- 
--- Dependencies:
---
---     gears   - Awesome builtin module
---     naughty - Awesome builtin module
---   
---   
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Check For Errors On Compile
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 08 2014 <> created
 --
@@ -46,9 +40,9 @@
 
 
 
--- ---------------------------
--- CHECK FOR ERRORS ON COMPILE
--- ---------------------------
+-- ---------------------------------------
+-- ----- CHECK FOR ERRORS ON COMPILE -----
+-- ---------------------------------------
 
 -- Check if awesome encountered an error during startup and fell back to another config
 if awesome.startup_errors then

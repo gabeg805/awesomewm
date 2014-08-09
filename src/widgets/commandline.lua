@@ -1,38 +1,38 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     commandline
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     require("commandline")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Returns command output as a string.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     doCommand - execute the specified command
 -- 
 -- 
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Execute Command
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 13 2014 <> created
 --
@@ -41,9 +41,9 @@
 -- **********************************************************************************
 
 
--- ---------------
--- EXECUTE COMMAND
--- ---------------
+-- ---------------------------
+-- ----- EXECUTE COMMAND -----
+-- ---------------------------
 
 -- Execute the specified command
 function doCommand(cmd, raw)

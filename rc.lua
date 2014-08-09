@@ -1,55 +1,40 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     rc.lua
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     rc.lua
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Main configuration file for Awesome.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     N/A
 -- 
 -- 
--- Dependencies:
---
---     gears     - Awesome builtin module
---     awful     - Awesome builtin module
---     wibox     - Awesome builtin module
---     beautiful - Awesome builtin module
---     naughty   - Awesome builtin module
---     menubar   - Awesome builtin module
---     
---     error_check.lua  - checks for errors on compile
---     aweInterface.lua - sets Awesome interface, adds widgets to panel, 
---                        defines tiling algorithms, sets wallpaper, etc.
---     keyindings.lua   - defines Awesome key and mouse bindings
---    
---    
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Import Libraries
 --     * Global Variables
 --     * Set Up the Awesome WM
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 08 2014 <> created
 --

@@ -1,39 +1,39 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     aweMenu
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     require("aweMenu")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Returns the Awesome launcher widget so that the user can it on the panel.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     aweMenu - returns the Awesome launcher with several Awesome options, as well
 --               as several System options (such as shut down and reboot)
 -- 
 -- 
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Create the Awesome Menu Launcher
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 13 2014 <> created
 -- 
@@ -42,9 +42,9 @@
 -- **********************************************************************************
 
 
--- --------------------------------
--- CREATE THE AWESOME MENU LAUNCHER
--- --------------------------------
+-- --------------------------------------------
+-- ----- CREATE THE AWESOME MENU LAUNCHER -----
+-- --------------------------------------------
 
 -- Create a laucher widget and a main menu (creates awesome A for panel)
 function aweMenu()

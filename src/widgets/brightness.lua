@@ -1,28 +1,28 @@
 -- 
--- Created By: Gabriel Gonzalez (contact me at gabeg@bu.edu)
+-- CREATED BY: Gabriel Gonzalez (contact me at gabeg@bu.edu)
 -- 
 -- 
--- Name:
+-- NAME:
 -- 	
 --     brightness
 -- 
 -- 
--- Syntax: 
+-- SYNTAX: 
 -- 	
 --     require("brightness")
 -- 
 -- 
--- Purpose:
+-- PURPOSE:
 -- 	
 --     Returns the brightness widget so that the user can put it on the panel.
 -- 
 -- 
--- Keywords:
+-- KEYWORDS:
 -- 	
 --     N/A
 -- 
 -- 
--- Functions:
+-- FUNCTIONS:
 -- 	
 --     setBrightIcon   - get brightness widget icon
 --     disp_brightMenu - display brightness notification
@@ -31,7 +31,7 @@
 --     brightness      - returns the brightness widget
 --   
 --   
---  File Structure:
+--  FILE STRUCTURE:
 --
 --     * Set Brightness Icon
 --     * Display Brightness Notification
@@ -39,7 +39,7 @@
 --     * Create the Brightness Widget
 -- 
 -- 
--- Modification History:
+-- MODIFICATION HISTORY:
 -- 	
 --     gabeg Mar 13 2014 <> created
 -- 
@@ -53,9 +53,9 @@
 -- ************************************************************************
 
 
--- -------------------
--- SET BRIGHTNESS ICON
--- -------------------
+-- -------------------------------
+-- ----- SET BRIGHTNESS ICON -----
+-- -------------------------------
 
 -- Sets the icon for the wifi widget
 function setBrightIcon(panel)
@@ -141,9 +141,9 @@ end
 
 
 
--- -------------------------------
--- DISPLAY BRIGHTNESS NOTIFICATION
--- -------------------------------
+-- -------------------------------------------
+-- ----- DISPLAY BRIGHTNESS NOTIFICATION -----
+-- -------------------------------------------
 
 -- Display the brightness notification
 function disp_brightMenu(timeout, hover_timeout)
@@ -172,9 +172,9 @@ end
 
 
 
--- ------------------------------------------
--- ENABLE BRIGHTNESS WIDGET MOUSE HOVER EVENT
--- ------------------------------------------
+-- ------------------------------------------------------
+-- ----- ENABLE BRIGHTNESS WIDGET MOUSE HOVER EVENT -----
+-- ------------------------------------------------------
 
 -- Make brightness widget hoverable (display popup)
 function brightHover(myBrightnessImage) 
@@ -212,9 +212,9 @@ end
 
 
 
--- ----------------------------
--- CREATE THE BRIGHTNESS WIDGET
--- ----------------------------
+-- ----------------------------------------
+-- ----- CREATE THE BRIGHTNESS WIDGET -----
+-- ----------------------------------------
 
 -- Returns brightness widget (image and text)
 function brightness()
