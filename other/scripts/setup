@@ -6,14 +6,6 @@
 #          configuration files for their Awesome WM.
 #
 
-
-## Check if current user is ROOT
-if [ $UID -eq 0 ]; then
-    echo "ERROR: Don't run this script as ROOT."
-    exit
-fi
-
-
 ## Make screenshots directory if not present
 if [ ! -d "$HOME/.screen/" ]; then 
     echo "Creating the screenshots directory at: $HOME/.screen  ..." 
@@ -29,11 +21,3 @@ sed -i "s/\/home\/gabeg/\/home\/$USER/g" \
     "$HOME"/.config/awesome/other/scripts/comp \
     "$HOME"/.config/awesome/src/keybindings.lua \
     "$HOME"/.config/awesome/src/widgets/*lua
-
-
-## Download missing dependencies
-echo "Downloading the dependencies..."
-sudo pacman -S sysstat
-sudo pacman -S lm_sensors
-sudo pacman -S acpi
-sudo pacman -S moc

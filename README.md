@@ -48,7 +48,14 @@ For more information on what each widget/config file does, check out their heade
 Installation
 ============
 
-To install the Awesome WM config files, execute the following:
+To install the Awesome WM config files, download the dependencies:
+
+    # pacman -S sysstat
+    # pacman -S lm_sensors
+    # pacman -S acpi
+    # pacman -S moc
+
+Then execute the following:
 
     $ unzip Awesome-WM-master.zip
     $ mkdir -p ~/.config/awesome
@@ -57,7 +64,7 @@ To install the Awesome WM config files, execute the following:
     $ cd ~/.config/awesome/other/scripts
     $ ./setup
 
-Good luck!
+Enjoy!
 
 
 
