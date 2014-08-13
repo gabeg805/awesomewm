@@ -12,9 +12,8 @@ workspaces, and panel customization.
 Documentation
 =============
 
-My Awesome setup has 6 widgets in all:
+My Awesome setup has 5 widgets in all:
 
-    - Awesome Menu
     - Clock
     - Brightness
     - Volume
@@ -23,8 +22,6 @@ My Awesome setup has 6 widgets in all:
 
 Each of these widgets has mouse events that are activated by hovering or clicking
 on the widget. The following explains what those mouse events are:
-
-    - Awesome Menu: Left mouse click displays the Awesome menu
 
     - Clock:        Mouse hover displays the calendar, you can change month by scrolling
 
@@ -40,7 +37,8 @@ on the widget. The following explains what those mouse events are:
                     on right mouse click, uptime, memory usage and cpu usage is displayed
                     and on left mouse click the mouse hover notification is displayed
 
-For more information on what each widget/config file does, check out their headers.
+For more information on what each widget/config file does, check out their headers 
+in their respective '.lua' file.
 
 
 
@@ -61,7 +59,7 @@ Then execute the following:
     $ mkdir -p ~/.config/awesome
     $ mv Awesome-WM-master/* ~/.config/awesome/
     $ rmdir Awesome-WM-master
-    $ cd ~/.config/awesome/other/scripts
+    $ cd ~/.config/awesome/src/scripts/
     $ ./setup
 
 Enjoy!

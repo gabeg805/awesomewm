@@ -17,7 +17,7 @@ fi
 echo "Modifying the file paths in the configuration files for '$USER'..."
 sed -i "s/\/home\/gabeg/\/home\/$USER/g" \
     "$HOME"/.config/awesome/rc.lua \
-    "$HOME"/.config/awesome/themes/theme.lua \
-    "$HOME"/.config/awesome/other/scripts/comp \
+    "$HOME"/.config/awesome/src/themes/theme.lua \
+    "$HOME"/.config/awesome/src/scripts/comp \
     "$HOME"/.config/awesome/src/keybindings.lua \
     "$HOME"/.config/awesome/src/widgets/*lua

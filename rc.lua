@@ -101,7 +101,7 @@ dofile("/home/gabeg/.config/awesome/src/error_check.lua")
 menubar.utils.terminal = terminal
 
 -- Set the Awesome wallpaper
-setWallpaper("/home/gabeg/.config/awesome/other/wallpapers/smooth.jpg")
+setWallpaper("/home/gabeg/.config/awesome/img/wallpapers/smooth.jpg")
 
 -- Define Awesome tiling layouts (algorithms)
 layouts = setLayouts()

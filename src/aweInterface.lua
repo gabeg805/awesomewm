@@ -46,7 +46,6 @@
 -- ----- IMPORT LIBRARIES -----
 -- ----------------------------
 
-require("aweMenu")
 require("clock")
 require("battery")
 require("wifi")
@@ -54,12 +53,10 @@ require("volume")
 require("brightness")
 
 
+
 -- ------------------------------------
 -- ----- DEFINE THE PANEL WIDGETS -----
 -- ------------------------------------
-
--- Create Awesome menu widget
-myLauncher = aweMenu()
 
 -- Create Awesome text clock widget
 myTextClock = clock()
@@ -134,17 +131,8 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     
-    left_layoutPrompt = wibox.layout.fixed.horizontal()
-    left_layoutLaunch = wibox.layout.fixed.horizontal()
-    left_layoutTag = wibox.layout.fixed.horizontal()
-    
-    left_layoutPrompt:add(mypromptbox[s])
-    left_layoutLaunch:add(myLauncher)
-    left_layoutTag:add(mytaglist[s])
-    
-    left_layout:add(left_layoutPrompt)
-    left_layout:add(left_layoutLaunch)
-    left_layout:add(left_layoutTag)
+    left_layout:add(mypromptbox[s])
+    left_layout:add(mytaglist[s])
     
     
     -- Widgets that are aligned to the right

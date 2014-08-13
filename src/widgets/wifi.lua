@@ -62,18 +62,18 @@
 function setWifiIcon(panel)
     
     -- Wireless network commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"
     local net_cmd = mainDir .. "comp net"
     local ssid_cmd = mainDir .. "comp net ssid"
     
 
     -- All wifi icons for different percentage values
-    local wireNone = "/home/gabeg/.config/awesome/icons/wifi/wireNone.png"
-    local wire0 = "/home/gabeg/.config/awesome/icons/wifi/wire0-20.png"
-    local wire20 = "/home/gabeg/.config/awesome/icons/wifi/wire20-40.png"
-    local wire40 = "/home/gabeg/.config/awesome/icons/wifi/wire40-60.png"
-    local wire60 = "/home/gabeg/.config/awesome/icons/wifi/wire60-80.png"
-    local wire80 = "/home/gabeg/.config/awesome/icons/wifi/wire80-100.png" 
+    local wireNone = "/home/gabeg/.config/awesome/img/icons/wifi/wireNone.png"
+    local wire0 = "/home/gabeg/.config/awesome/img/icons/wifi/wire0-20.png"
+    local wire20 = "/home/gabeg/.config/awesome/img/icons/wifi/wire20-40.png"
+    local wire40 = "/home/gabeg/.config/awesome/img/icons/wifi/wire40-60.png"
+    local wire60 = "/home/gabeg/.config/awesome/img/icons/wifi/wire60-80.png"
+    local wire80 = "/home/gabeg/.config/awesome/img/icons/wifi/wire80-100.png" 
     
     
     -- Determine wifi signal strength
@@ -117,7 +117,7 @@ end
 function wifiHover(myWifiImage)
     
     -- Wireless network commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"    
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"    
     local net_cmd = mainDir .. "comp net"
     local ssid_cmd = mainDir .. "comp net ssid"
     

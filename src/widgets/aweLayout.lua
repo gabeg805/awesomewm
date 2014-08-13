@@ -56,7 +56,7 @@
 function setWallpaper(wallpaper)
     
     -- Themes define colours, icons, and wallpapers
-    beautiful.init("/home/gabeg/.config/awesome/themes/theme.lua")
+    beautiful.init("/home/gabeg/.config/awesome/src/themes/theme.lua")
         
     -- Put the wallpaper on each screen
     for s = 1, screen.count() do
@@ -73,8 +73,8 @@ end
 -- Define Awesome tiling layouts (algorithms)
 function setLayouts()
     layouts = {
-        awful.layout.suit.fair,
         awful.layout.suit.spiral.dwindle,
+        awful.layout.suit.fair,
         awful.layout.suit.tile,
         awful.layout.suit.floating    
     }

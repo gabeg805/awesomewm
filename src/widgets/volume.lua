@@ -67,7 +67,7 @@
 function muteStat()
     
     -- Volume commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"
     local volMuteStat_cmd = mainDir .. "comp vol muteStat"
     
     
@@ -93,7 +93,7 @@ end
 function musicStat()
     
     -- Volume commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"
     local musicRunStat_cmd = "pgrep -c mocp"
     
     
@@ -140,25 +140,25 @@ end
 function getVolIcon()
     
     -- Volume commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"
     local vol_cmd = mainDir .. "comp vol stat"
         
     
     -- All volume icons for different percentage values
-    local volMute = "/home/gabeg/.config/awesome/icons/vol/volMute.png"
-    local vol0 = "/home/gabeg/.config/awesome/icons/vol/vol0-20.png"
-    local vol20 = "/home/gabeg/.config/awesome/icons/vol/vol20-40.png"
-    local vol40 = "/home/gabeg/.config/awesome/icons/vol/vol40-60.png"
-    local vol60 = "/home/gabeg/.config/awesome/icons/vol/vol60-80.png"
-    local vol80 = "/home/gabeg/.config/awesome/icons/vol/vol80-100.png"
+    local volMute = "/home/gabeg/.config/awesome/img/icons/vol/volMute.png"
+    local vol0 = "/home/gabeg/.config/awesome/img/icons/vol/vol0-20.png"
+    local vol20 = "/home/gabeg/.config/awesome/img/icons/vol/vol20-40.png"
+    local vol40 = "/home/gabeg/.config/awesome/img/icons/vol/vol40-60.png"
+    local vol60 = "/home/gabeg/.config/awesome/img/icons/vol/vol60-80.png"
+    local vol80 = "/home/gabeg/.config/awesome/img/icons/vol/vol80-100.png"
     
     -- All volume icons when music is playing
-    local volMusMute = "/home/gabeg/.config/awesome/icons/vol/volMusMute.png"
-    local volMus0 = "/home/gabeg/.config/awesome/icons/vol/volMus0-20.png"
-    local volMus20 = "/home/gabeg/.config/awesome/icons/vol/volMus20-40.png"
-    local volMus40 = "/home/gabeg/.config/awesome/icons/vol/volMus40-60.png"
-    local volMus60 = "/home/gabeg/.config/awesome/icons/vol/volMus60-80.png"
-    local volMus80 = "/home/gabeg/.config/awesome/icons/vol/volMus80-100.png"
+    local volMusMute = "/home/gabeg/.config/awesome/img/icons/vol/volMusMute.png"
+    local volMus0 = "/home/gabeg/.config/awesome/img/icons/vol/volMus0-20.png"
+    local volMus20 = "/home/gabeg/.config/awesome/img/icons/vol/volMus20-40.png"
+    local volMus40 = "/home/gabeg/.config/awesome/img/icons/vol/volMus40-60.png"
+    local volMus60 = "/home/gabeg/.config/awesome/img/icons/vol/volMus60-80.png"
+    local volMus80 = "/home/gabeg/.config/awesome/img/icons/vol/volMus80-100.png"
     
     
     -- Determine volume status
@@ -230,7 +230,7 @@ end
 function disp_volMenu(timeout, hover_timeout)
     
     -- Volume commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"    
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"    
     local vol_cmd = mainDir .. "comp vol stat"
     
     
@@ -285,7 +285,7 @@ end
 function volHover(myVolumeLauncher, myMusicMenu) 
     
     -- Volume commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"
     local vol_cmd = mainDir .. "comp vol stat"
     local chVol_cmd = mainDir .. "comp vol"
     

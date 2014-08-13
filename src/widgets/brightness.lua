@@ -61,21 +61,21 @@
 function setBrightIcon(panel)
     
     -- Brightness commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"
     local brightStat_cmd = mainDir .. "comp bright stat"
 
     
     -- All icons for the brightness widget
-    local bright0 = "/home/gabeg/.config/awesome/icons/bright/bright0-10.png"
-    local bright10 = "/home/gabeg/.config/awesome/icons/bright/bright10-20.png"
-    local bright20 = "/home/gabeg/.config/awesome/icons/bright/bright20-30.png"
-    local bright30 = "/home/gabeg/.config/awesome/icons/bright/bright30-40.png"
-    local bright40 = "/home/gabeg/.config/awesome/icons/bright/bright40-50.png"
-    local bright50 = "/home/gabeg/.config/awesome/icons/bright/bright50-60.png"
-    local bright60 = "/home/gabeg/.config/awesome/icons/bright/bright60-70.png"
-    local bright70 = "/home/gabeg/.config/awesome/icons/bright/bright70-80.png"
-    local bright80 = "/home/gabeg/.config/awesome/icons/bright/bright80-90.png"
-    local bright90 = "/home/gabeg/.config/awesome/icons/bright/bright90-100.png"
+    local bright0 = "/home/gabeg/.config/awesome/img/icons/bright/bright0-10.png"
+    local bright10 = "/home/gabeg/.config/awesome/img/icons/bright/bright10-20.png"
+    local bright20 = "/home/gabeg/.config/awesome/img/icons/bright/bright20-30.png"
+    local bright30 = "/home/gabeg/.config/awesome/img/icons/bright/bright30-40.png"
+    local bright40 = "/home/gabeg/.config/awesome/img/icons/bright/bright40-50.png"
+    local bright50 = "/home/gabeg/.config/awesome/img/icons/bright/bright50-60.png"
+    local bright60 = "/home/gabeg/.config/awesome/img/icons/bright/bright60-70.png"
+    local bright70 = "/home/gabeg/.config/awesome/img/icons/bright/bright70-80.png"
+    local bright80 = "/home/gabeg/.config/awesome/img/icons/bright/bright80-90.png"
+    local bright90 = "/home/gabeg/.config/awesome/img/icons/bright/bright90-100.png"
     
     
     -- Check if a command was given, or a percent value
@@ -149,7 +149,7 @@ end
 function disp_brightMenu(timeout, hover_timeout)
     
     -- Brightness commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"
     local brightStat_cmd = mainDir .. "comp bright stat"
         
     
@@ -180,7 +180,7 @@ end
 function brightHover(myBrightnessImage) 
     
     -- Brightness commands
-    local mainDir = "/home/gabeg/.config/awesome/other/scripts/"
+    local mainDir = "/home/gabeg/.config/awesome/src/scripts/"
     local upBright_cmd = mainDir .. "comp bright inc"
     local downBright_cmd = mainDir .. "comp bright dec"
     

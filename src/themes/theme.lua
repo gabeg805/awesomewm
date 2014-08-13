@@ -34,13 +34,13 @@ theme.border_marked = "#91231c"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Display the taglist squares
-theme.taglist_squares_sel   = "/home/gabeg/.config/awesome/themes/taglist/arrowfw.png"
-theme.taglist_squares_unsel = "/home/gabeg/.config/awesome/themes/taglist/arroww.png"
+theme.taglist_squares_sel   = "/home/gabeg/.config/awesome/src/themes/taglist/arrowfw.png"
+theme.taglist_squares_unsel = "/home/gabeg/.config/awesome/src/themes/taglist/arroww.png"
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_submenu_icon = "/home/gabeg/.config/awesome/themes/submenu.png"
+theme.menu_submenu_icon = "/home/gabeg/.config/awesome/src/themes/submenu.png"
 theme.menu_height = 15
 theme.menu_width  = 100
 
@@ -89,7 +89,7 @@ theme.layout_tiletop = "/usr/share/awesome/themes/default/layouts/tiletopw.png"
 theme.layout_spiral  = "/usr/share/awesome/themes/default/layouts/spiralw.png"
 theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
-theme.awesome_icon = "/home/gabeg/.config/awesome/icons/awesome.png"
+theme.awesome_icon = "/home/gabeg/.config/awesome/img/icons/awesome.png"
 
 -- Define the icon theme for application icons. If not set then the icons 
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

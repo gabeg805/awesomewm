@@ -60,8 +60,8 @@ modkey = "Mod4"
 
 -- Mouse bindings
 root.buttons(awful.util.table.join(
-                 awful.button({ }, 1, function () myMainMenu:hide(); myMusicMenu:hide() end), 
-                 awful.button({ }, 3, function () myMainMenu:toggle() end)
+                 awful.button({ }, 1, function () myMusicMenu:hide() end), 
+                 awful.button({ }, 3, function () end)
                                   )
             )
 
