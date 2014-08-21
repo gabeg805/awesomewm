@@ -4,12 +4,12 @@
 -- 
 -- NAME:
 -- 	
---     wifi
+--     Wifi
 -- 
 -- 
 -- SYNTAX: 
 -- 	
---     require("wifi")
+--     require("Wifi")
 -- 
 -- 
 -- PURPOSE:

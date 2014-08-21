@@ -4,12 +4,12 @@
 -- 
 -- NAME:
 -- 	
---     aweLayout
+--     Layout
 -- 
 -- 
 -- SYNTAX: 
 -- 	
---     require("aweLayout")
+--     require("Layout")
 -- 
 -- 
 -- PURPOSE:
@@ -73,10 +73,10 @@ end
 -- Define Awesome tiling layouts (algorithms)
 function setLayouts()
     layouts = {
+        awful.layout.suit.floating,
         awful.layout.suit.spiral.dwindle,
         awful.layout.suit.fair,
-        awful.layout.suit.tile,
-        awful.layout.suit.floating    
+        awful.layout.suit.tile
     }
     
     return layouts

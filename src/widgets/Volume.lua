@@ -4,12 +4,12 @@
 -- 
 -- NAME:
 -- 	
---     volume
+--     Volume
 -- 
 -- 
 -- SYNTAX: 
 -- 	
---     require("volume")
+--     require("Volume")
 -- 
 -- 
 -- PURPOSE:
@@ -168,8 +168,7 @@ function getVolIcon()
     
     local muteTest = muteStat()
     local musicTest = musicStat()
-    
-    
+        
     -- Check if music is running
     if musicTest == "music" then
    

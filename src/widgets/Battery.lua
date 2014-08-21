@@ -4,12 +4,12 @@
 -- 
 -- NAME:
 -- 	
---     battery
+--     Battery
 -- 
 -- 
 -- SYNTAX: 
 -- 	
---     require("battery")
+--     require("Battery")
 -- 
 -- 
 -- PURPOSE:

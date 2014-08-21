@@ -71,8 +71,8 @@ menubar = require("menubar")
 
 
 -- Custom modules for the Awesome layout and Linux command execution
-require("aweLayout")
-require("commandline")
+require("Layout")
+require("CommandLine")
 
 
 
@@ -81,7 +81,6 @@ require("commandline")
 -- ----------------
 
 -- Default file manager, terminal, editor, and browser
-fileman = "nautilus"
 terminal = "urxvt"
 editor = "emacs"
 editor_cmd = terminal .. " -e " .. editor

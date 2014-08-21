@@ -4,12 +4,12 @@
 -- 
 -- NAME:
 -- 	
---     brightness
+--     Brightness
 -- 
 -- 
 -- SYNTAX: 
 -- 	
---     require("brightness")
+--     require("Brightness")
 -- 
 -- 
 -- PURPOSE:
@@ -57,7 +57,7 @@
 -- ----- SET BRIGHTNESS ICON -----
 -- -------------------------------
 
--- Sets the icon for the wifi widget
+-- Sets the icon for the brightness widget
 function setBrightIcon(panel)
     
     -- Brightness commands

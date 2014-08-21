@@ -4,12 +4,12 @@
 -- 
 -- NAME:
 -- 	
---     commandline
+--     CommandLine
 -- 
 -- 
 -- SYNTAX: 
 -- 	
---     require("commandline")
+--     require("CommandLine")
 -- 
 -- 
 -- PURPOSE:

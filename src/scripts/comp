@@ -134,7 +134,7 @@ case "$1" in
 
 ## Brightness Settings
  "bright")
-           mainBrightDir='/home/gabeg/.config/awesome/other/scripts'
+           mainBrightDir='/home/gabeg/.config/awesome/src/scripts'
            
            case "$2" in
                 'inc') 

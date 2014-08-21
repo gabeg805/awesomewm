@@ -46,11 +46,11 @@
 -- ----- IMPORT LIBRARIES -----
 -- ----------------------------
 
-require("clock")
-require("battery")
-require("wifi")
-require("volume")
-require("brightness")
+require("Clock")
+require("Battery")
+require("Wifi")
+require("Volume")
+require("Brightness")
 
 
 

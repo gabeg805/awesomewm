@@ -4,12 +4,12 @@
 -- 
 -- NAME:
 -- 	
---     clock
+--     Clock
 -- 
 -- 
 -- SYNTAX: 
 -- 	
---     require("clock")
+--     require("Clock")
 -- 
 -- 
 -- PURPOSE:
